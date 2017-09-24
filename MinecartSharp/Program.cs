@@ -20,6 +20,7 @@ namespace MinecartSharp
 
         static void Main(string[] args)
         {
+            Console.Title = "MinecartSharp server";
             Console.WriteLine("Starting MinecartSharp v{0}", Assembly.GetExecutingAssembly().GetName().Version);
 
             // other things?

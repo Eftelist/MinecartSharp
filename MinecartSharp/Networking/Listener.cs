@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Configuration;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using MinecartSharp.Utils;
@@ -26,7 +28,7 @@ namespace MinecartSharp.Networking
         public void HandleConnections()
         {
             if (_isListening == false)
-                throw new Exception("tcpserver is not initialized!");
+                throw new Exception("tcplistener is not initialized!");
 
             Program.Logger.Log(LogType.Info, "Ready to accept connections...");
 
@@ -37,8 +39,19 @@ namespace MinecartSharp.Networking
 
                 Program.Logger.Log(LogType.Info, "Connection from: " + (ip == null? "Uknown" : ip.Address.ToString()));
 
+                new Task((() => { HandleClient(client); })).Start();
+            }
+        }
+
+        public void HandleClient(TcpClient client)
+        {
+            var stream = client.GetStream();
+
+            while (true)
+            {
 
             }
+            
         }
 
         public void Stop()
