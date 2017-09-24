@@ -32,7 +32,12 @@ namespace MinecartSharp.Networking
 
             while (_isListening)
             {
-                // handle connections
+                var client = _serverListener.AcceptTcpClient();
+                IPEndPoint ip = client.Client.RemoteEndPoint as IPEndPoint;
+
+                Program.Logger.Log(LogType.Info, "Connection from: " + (ip == null? "Uknown" : ip.Address.ToString()));
+
+
             }
         }
 

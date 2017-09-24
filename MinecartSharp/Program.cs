@@ -35,6 +35,8 @@ namespace MinecartSharp
 
             Configuration = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
 
+            //TODO: add world loading shit
+
             Listener listener = new Listener();
             new Thread((() => listener.HandleConnections())).Start();
 
