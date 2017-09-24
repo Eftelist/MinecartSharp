@@ -5,7 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using MinecartSharp.Networking;
+using MinecartSharp.Utils;
 
 namespace MinecartSharp
 {
@@ -13,6 +16,7 @@ namespace MinecartSharp
     {
 
         public static Config Configuration = new Config();
+        public static Logger Logger = new Logger();
 
         static void Main(string[] args)
         {
@@ -20,7 +24,7 @@ namespace MinecartSharp
 
             // other things?
 
-            Console.WriteLine("Loading server configuration");
+            Logger.Log(LogType.Info, "Loading server configuration");
             if (!File.Exists("config.json"))
             {
                 using (StreamWriter file = File.CreateText("config.json"))
@@ -31,6 +35,8 @@ namespace MinecartSharp
 
             Configuration = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
 
+            Listener listener = new Listener();
+            new Thread((() => listener.HandleConnections())).Start();
 
         }
     }

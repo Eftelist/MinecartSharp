@@ -17,7 +17,7 @@ namespace MinecartSharp
         [JsonProperty("Max-players")]
         public int MaxPlayer { get; set; } = 16;
 
-        public string Motd { get; set; }
+        public string Motd { get; set; } = "";
         [JsonProperty("Online-mode")]
         public bool Whitelist { get; set; } = false;
         public bool OnlineMode { get; set; } = true;
