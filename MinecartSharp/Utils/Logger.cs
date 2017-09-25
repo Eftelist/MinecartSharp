@@ -24,7 +24,7 @@ namespace MinecartSharp.Utils
                     break;
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("ERROR");
+                    Console.Write("ERROR");
                     break;
             }
 
