@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
 using System.IO;
-using MinecraftSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.MinecartSharp.Networking.Wrappers;
 
 namespace MinecraftSharp.MinecartSharp.Networking.Helpers
 {
@@ -13,10 +13,12 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
         NetworkStream mStream;
         ClientWrapper Client;
 
+
         public ByteBuffer(NetworkStream str, ClientWrapper client)
         {
             mStream = str;
         }
+
 
         public void Write(byte[] Data, int Offset, int Length)
         {
@@ -24,6 +26,14 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
             {
                 bffr.Add(Data[i + Offset]);
             }
+        }
+
+        public void Write(byte[] Data)
+        {
+            foreach (byte i in Data)
+             {
+                 bffr.Add(i);
+             }
         }
 
         public void WriteVarInt(int Integer)
@@ -51,28 +61,30 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
         {
             byte[] Buffer = BitConverter.GetBytes(Data);
             foreach (byte i in Buffer)
-            {
-                bffr.Add(i);
-            }
+            Write(Buffer);
         }
 
         public void WriteString(string Data)
         {
             byte[] StringData = Encoding.UTF8.GetBytes(Data);
             WriteVarInt(StringData.Length);
-            foreach (byte i in StringData)
-            {
-                bffr.Add(i);
-            }
+            Write(StringData);
         }
 
         public void WriteShort(short Data)
         {
             byte[] ShortData = BitConverter.GetBytes(Data);
-            foreach (byte i in ShortData)
-            {
-                bffr.Add(i);
-            }
+            Write(ShortData);
+        }
+
+        public void WriteByte(byte Data)
+        {
+             bffr.Add(Data);
+        }
+
+        public void WriteBool(bool Data)
+        {
+            Write(BitConverter.GetBytes (Data));
         }
 
         /// <summary>

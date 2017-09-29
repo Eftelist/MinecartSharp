@@ -4,13 +4,13 @@ using MinecartSharp.MinecartSharp.Networking.Wrappers;
 
 namespace MinecartSharp.MinecartSharp.Networking.Packets
 {
-    public class LoginSuccess : IPacket
+    public class ChunkData : IPacket
     {
         public int PacketID
         {
             get
             {
-                return 0x02;
+                return 0x21;
             }
         }
 
@@ -24,13 +24,13 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
 
         public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
+
         }
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
             buffer.WriteVarInt(PacketID);
-            buffer.WriteString((string)Arguments[0]);
-            buffer.WriteString((string)Arguments[1]);
+            buffer.Write((byte[])Arguments[0]);
             buffer.FlushData();
         }
     }

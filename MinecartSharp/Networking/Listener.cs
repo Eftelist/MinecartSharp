@@ -4,10 +4,9 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using MinecartSharp.Utils;
 using System.Collections.Generic;
-using MinecraftSharp.MinecartSharp.Networking.Wrappers;
-using MinecraftSharp.MinecartSharp.Networking.Helpers;
+using MinecartSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.MinecartSharp.Networking.Helpers;
 using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking.Packets;
 using MinecartSharp.MinecartSharp.Networking;
 
 namespace MinecartSharp.Networking
@@ -51,7 +50,6 @@ namespace MinecartSharp.Networking
         public void HandleClient(TcpClient client)
         {
             ClientWrapper Client = new ClientWrapper(client);
-            Client.MinecraftStream = new ByteBuffer(client.GetStream(), Client);
             var clientStream = client.GetStream();
 
             while (true)
@@ -69,17 +67,23 @@ namespace MinecartSharp.Networking
                         bool found = false;
                         foreach (IPacket i in Globals.Packets)
                         {
-                            if (i.PacketID == packid)
+                            if (i.PacketID == packid && i.IsPlayePacket == Client.PlayMode)
                             {
                                 i.Read(Client, Buf, new object[0]);
                                 found = true;
                                 break;
                             }
                         }
+                        if (!found)
+                            {
+                            Program.Logger.Log(LogType.Error, "Packet not found");
+                            }
                     }
                     else
                     {
                         //Stop the while loop. Client disconnected!
+                        Client.StopKeepAliveTimer();
+                        Client.TCPClient.Close();
                         break;
                     }
                 }

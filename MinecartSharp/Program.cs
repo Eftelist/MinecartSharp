@@ -21,7 +21,7 @@ namespace MinecartSharp
             Console.Title = "MinecartSharp server";
             Console.WriteLine("Starting MinecartSharp v{0}", Assembly.GetExecutingAssembly().GetName().Version);
             Globals.setupPackets();
-
+            Globals.loadDebugChunks();
             // other things?
 
             Logger.Log(LogType.Info, "Loading server configuration");
