@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using MinecartSharp.Networking;
 using MinecartSharp.Utils;
+using MinecartSharp.MinecartSharp.Networking;
 
 namespace MinecartSharp
 {
@@ -19,6 +20,7 @@ namespace MinecartSharp
         {
             Console.Title = "MinecartSharp server";
             Console.WriteLine("Starting MinecartSharp v{0}", Assembly.GetExecutingAssembly().GetName().Version);
+            Globals.setupPackets();
 
             // other things?
 
