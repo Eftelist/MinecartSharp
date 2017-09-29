@@ -1,5 +1,6 @@
 ﻿using MinecraftSharp.MinecartSharp.Networking.Wrappers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -11,7 +12,6 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
         public int Size = 0;
         private int LastByte = 0;
         public byte[] BufferedData = new byte[4096];
-        private int DebugByte = 0;
 
         public MSGBuffer(ClientWrapper client)
         {
@@ -25,13 +25,6 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
             return returnData;
         }
 
-        private int ReadDebugByte()
-        {
-            byte returnData = BufferedData[DebugByte];
-            DebugByte++;
-            return returnData;
-        }
-
         private byte[] Read(int Length)
         {
             byte[] Buffered = new byte[Length];
@@ -41,21 +34,6 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
         }
 
         #region Reader
-        public int ReadVarIntDebug()
-        {
-            int value = 0;
-            int size = 0;
-            int b;
-            while (((b = ReadDebugByte()) & 0x80) == 0x80)
-            {
-                value |= (b & 0x7F) << (size++ * 7);
-                if (size > 5)
-                {
-                    throw new IOException("VarInt too long. Hehe that's punny.");
-                }
-            }
-            return value | ((b & 0x7F) << (size * 7));
-        }
 
         public int ReadVarInt()
         {
@@ -104,8 +82,33 @@ namespace MinecraftSharp.MinecartSharp.Networking.Helpers
         public string ReadString()
         {
             int Length = ReadVarInt();
-            return Encoding.UTF8.GetString(Read(Length));
+            byte[] StringValue = Read(Length);
+            return Encoding.UTF8.GetString(StringValue);
         }
-        #endregion
+
+        /// <summary>
+        /// Reads the username. (We cannot just use ReadString() because of some bug)...
+         /// Idk what happend, but it seems to send an extra Short for the username there...
+         /// Also, worst solution there is xD
+         /// </summary>
+         /// <returns>The username.</returns>
+         public string ReadUsername()
+         {
+             byte[] NoEdit = Encoding.UTF8.GetBytes(ReadString());
+             List<byte> t = new List<byte>();
+ 
+             int D = 0;
+             foreach (byte i in NoEdit)
+             {
+                 if (D > 1)
+                 {
+                     t.Add(i);
+                 }
+                 D++;
+             }
+
+             return Encoding.UTF8.GetString(t.ToArray());
+          }
+          #endregion
     }
 }

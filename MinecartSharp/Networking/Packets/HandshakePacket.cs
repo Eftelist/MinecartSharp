@@ -3,6 +3,7 @@ using MinecartSharp.Utils;
 using MinecraftSharp.MinecartSharp.Networking.Helpers;
 using MinecraftSharp.MinecartSharp.Networking.Wrappers;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 
 namespace MinecartSharp.MinecartSharp.Networking.Packets
@@ -46,11 +47,11 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
 
         private void HandleLoginRequest(ClientWrapper state, MSGBuffer buffer)
         {
-            string Username = buffer.ReadString();
+            string Username = buffer.ReadUsername();
             Program.Logger.Log(LogType.Info, Username);
             string UUID = getUUID(Username);
-           
-            new LoginSuccess().Write(state, new object[] { Username, UUID });
+
+            new LoginSuccess().Write(state, new object[] { UUID, Username });
         }
 
         private string getUUID(string username)
@@ -65,7 +66,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
                 uuid = UUID.id;
                 Program.Logger.Log(LogType.Info, "New connection from: " + username2 + ", uuid = " + uuid);
             }
-            return uuid;
+            return new Guid(uuid).ToString();
         }
 
         public void Write(ClientWrapper state, object[] Arguments)
