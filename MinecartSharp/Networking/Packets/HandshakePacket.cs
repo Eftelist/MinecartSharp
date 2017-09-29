@@ -2,6 +2,7 @@
 using MinecartSharp.Utils;
 using MinecraftSharp.MinecartSharp.Networking.Helpers;
 using MinecraftSharp.MinecartSharp.Networking.Wrappers;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace MinecartSharp.MinecartSharp.Networking.Packets
@@ -46,24 +47,36 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
         private void HandleLoginRequest(ClientWrapper state, MSGBuffer buffer)
         {
             string Username = buffer.ReadString();
+            Program.Logger.Log(LogType.Info, Username);
             string UUID = getUUID(Username);
-
+           
             new LoginSuccess().Write(state, new object[] { Username, UUID });
         }
 
         private string getUUID(string username)
         {
-            WebClient wc = new WebClient();
-            string result = wc.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + username);
-            string[] _result = result.Split('"');
-
-            string UUID = _result[3];
-            return UUID;
+            UuID UUID = null;
+            string uuid = null;
+            using (var wc = new System.Net.WebClient())
+            {
+                string username2 = username.Replace("\0\n", "");
+                var json = wc.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + username2);
+                UUID = JsonConvert.DeserializeObject<UuID>(json);
+                uuid = UUID.id;
+                Program.Logger.Log(LogType.Info, "New connection from: " + username2 + ", uuid = " + uuid);
+            }
+            return uuid;
         }
 
         public void Write(ClientWrapper state, object[] Arguments)
         {
 
         }
+    }
+
+    internal class UuID
+    {
+        public string id { get; set; }
+        public string name { get; set; }
     }
 }
