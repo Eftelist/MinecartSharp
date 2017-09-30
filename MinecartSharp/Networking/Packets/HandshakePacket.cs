@@ -53,7 +53,7 @@ namespace MinecaftSharp.Networking.Packets
         private void HandleStatusRequest(ClientWrapper state, MSGBuffer buffer)
         {
             buffer.WriteVarInt(PacketID);
-            //buffer.WriteString("{\"version\": {\"name\": \"" + Globals.ProtocolName + "\",\"protocol\": " + Globals.ProtocolVersion + "},\"players\": {\"max\": " + Globals.MaxPlayers + ",\"online\": " + Globals.PlayersOnline + "},\"description\": {\"text\":\"" + Globals.RandomMOTD + "\"}}");
+
             Serverping serverlistping = new Serverping()
             {
                 Version = new ServerpingVersion()
@@ -70,8 +70,8 @@ namespace MinecaftSharp.Networking.Packets
                 {
                     Motd = Globals.Config.Motd
                 },
-                Favicon = ""
-            };
+                Favicon = (Globals.Favicon == null) ? "" : Globals.Favicon
+        };
 
             buffer.WriteString(JsonConvert.SerializeObject(serverlistping));
             buffer.FlushData();

@@ -41,7 +41,8 @@ namespace MinecartSharp
 
             if (File.Exists("server-icon.png"))
             {
-                //TODO: add favicon code to load as base64
+                var servericon = File.ReadAllBytes("server-icon.png");
+                Globals.Favicon = "data:image/png;base64," + Convert.ToBase64String(servericon);
             }
 
             //TODO: add world loading shit
