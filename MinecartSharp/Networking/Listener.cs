@@ -1,15 +1,11 @@
-﻿using MinecartSharp;
-using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking;
-using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
-using MinecartSharp.Utils;
-using System.Net;
+﻿using MinecartSharp.Utils;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
+using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecartSharp.MinecartSharp.Networking
+namespace MinecartSharp.Networking
 {
     public class BasicListener
     {
@@ -21,9 +17,10 @@ namespace MinecartSharp.MinecartSharp.Networking
             {
                 TcpClient tcp = Globals.ServerListener.AcceptTcpClient();
                 NetworkStream stream = tcp.GetStream();
-               
-                Program.Logger.Log(LogType.Info, "A new connection has been made");
 
+#if DEBUG
+                Program.Logger.Log(LogType.Info, "A new connection has been made");
+#endif
                 new Task((() => { HandleClientCommNew(tcp ,stream); })).Start();
             }
         }

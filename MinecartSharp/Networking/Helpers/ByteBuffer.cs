@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
-using System.IO;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecraftSharp.MinecartSharp.Networking.Helpers
+namespace MinecartSharp.Networking.Helpers
 {
     public class ByteBuffer
     {

@@ -1,9 +1,8 @@
 ﻿using MinecartSharp.MinecartSharp.Objects;
 using System;
-using MinecartSharp;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecraftSharp.MinecartSharp.Objects
+namespace MinecartSharp.Objects
 {
     public class Player
     {

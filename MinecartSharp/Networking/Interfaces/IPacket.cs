@@ -1,7 +1,7 @@
-﻿using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
+﻿using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecartSharp.MinecaftSharp.Networking.Interfaces
+namespace MinecartSharp.Networking.Interfaces
 {
     public interface IPacket
     {

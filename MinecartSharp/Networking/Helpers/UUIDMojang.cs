@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MinecaftSharp.Networking.Helpers
+namespace MinecartSharp.Networking.Helpers
 {
     public class UUIDMojang
     {

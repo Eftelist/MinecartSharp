@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecartSharp.MinecartSharp.Objects
+namespace MinecartSharp.Objects
 {
     public class Vector3
     {

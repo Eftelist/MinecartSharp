@@ -1,10 +1,10 @@
-﻿using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Packets;
-using MinecraftSharp.MinecartSharp.Objects;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Timers;
+using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Packets;
+using MinecartSharp.Objects;
 
-namespace MinecartSharp.MinecartSharp.Networking.Wrappers
+namespace MinecartSharp.Networking.Wrappers
 {
     public class ClientWrapper
     {

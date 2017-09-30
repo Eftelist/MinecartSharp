@@ -4,9 +4,9 @@ using System.Text;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecartSharp.MinecartSharp.Networking.Helpers
+namespace MinecartSharp.Networking.Helpers
 {
     public class MSGBuffer
     {

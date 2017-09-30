@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MinecartSharp.MinecaftSharp.Networking.Interfaces;
 using MinecartSharp.MinecartSharp.Networking.Packets;
 using MinecartSharp.Objects;
 using MinecartSharp.Networking.Packets;
@@ -8,11 +7,10 @@ using MinecartSharp.Objects.Chunks;
 using MinecartSharp.MinecartSharp.Objects.Chunks;
 using System.Net.Sockets;
 using System.Net;
-using MinecraftSharp.MinecartSharp.Objects;
 using System.Threading;
 using System.Timers;
-using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecaftSharp.Networking.Packets;
+using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Utils;
 
 namespace MinecartSharp

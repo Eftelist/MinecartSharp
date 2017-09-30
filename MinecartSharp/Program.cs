@@ -3,8 +3,8 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using MinecartSharp.Networking;
 using MinecartSharp.Utils;
-using MinecartSharp.MinecartSharp.Networking;
 
 namespace MinecartSharp
 {

@@ -1,18 +1,14 @@
-﻿using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Packets;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
-using MinecartSharp.MinecartSharp.Objects;
-using MinecartSharp.Networking.Packets;
-using MinecartSharp.Utils;
-using MinecraftSharp.MinecartSharp.Objects;
+﻿using MinecartSharp.Utils;
 using System;
 using System.Net;
-using MinecartSharp;
+using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Objects;
+using MinecartSharp.Networking.Wrappers;
+using MinecartSharp.Objects;
 using Newtonsoft.Json;
 
-namespace MinecaftSharp.Networking.Packets
+namespace MinecartSharp.Networking.Packets
 {
     public class Handshake : IPacket
     {
@@ -105,6 +101,9 @@ namespace MinecaftSharp.Networking.Packets
 
         private string getUUID(string username)
         {
+            if (string.IsNullOrEmpty(username))
+                throw new Exception("username is empty");
+
             using (WebClient webClient = new WebClient())
             {
                
@@ -116,7 +115,7 @@ namespace MinecaftSharp.Networking.Packets
                 }
                 catch (WebException e)
                 {
-                    Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username " + username);
+                    Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username" + " " + username);
                     Globals.Logger.Log(LogType.Error, e.Message);
                     return "";
                 }

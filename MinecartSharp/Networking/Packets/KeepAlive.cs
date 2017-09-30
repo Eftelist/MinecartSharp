@@ -1,9 +1,9 @@
-﻿using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
-using System;
+﻿using System;
+using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Wrappers;
 
-namespace MinecartSharp.MinecartSharp.Networking.Packets
+namespace MinecartSharp.Networking.Packets
 {
     public class KeepAlive : IPacket
     {

@@ -1,13 +1,7 @@
-﻿using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking;
-using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
-using MinecartSharp.MinecartSharp.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Wrappers;
+using MinecartSharp.Objects;
 
 namespace MinecartSharp.Networking.Packets
 {
