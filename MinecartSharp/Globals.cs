@@ -13,6 +13,7 @@ using System.Threading;
 using System.Timers;
 using MinecartSharp.MinecartSharp.Networking.Helpers;
 using MinecaftSharp.Networking.Packets;
+using MinecartSharp.Utils;
 
 namespace MinecartSharp
 {
@@ -32,6 +33,7 @@ namespace MinecartSharp
         public static List<Player> Players = new List<Player>();
         public static long TimeOfDay = 1200;
         public static long WorldAge = 0;
+        public static Logger Logger = new Logger();
 
 
         public static void setup()
