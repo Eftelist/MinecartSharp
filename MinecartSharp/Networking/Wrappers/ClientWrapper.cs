@@ -27,7 +27,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
-
+                Globals.Logger.Log(Utils.LogType.Error, "Packet failed");
             }
         }
 
@@ -41,7 +41,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
-   
+                Globals.Logger.Log(Utils.LogType.Error, "Packet failed");
             }
         }
 
@@ -55,7 +55,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
-   
+                Globals.Logger.Log(Utils.LogType.Error, "Packet failed");
             }
         }
 

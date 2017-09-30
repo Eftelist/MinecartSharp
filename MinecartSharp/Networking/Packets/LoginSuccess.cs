@@ -28,6 +28,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
+            Globals.Logger.Log(Utils.LogType.Error, "" + Arguments[0].ToString() + " : " +Arguments[1].ToString());
             buffer.WriteVarInt(PacketID);
             buffer.WriteString((string)Arguments[0]);
             buffer.WriteString((string)Arguments[1]);

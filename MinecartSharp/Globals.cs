@@ -77,9 +77,7 @@ namespace MinecartSharp
         internal static void setupPackets()
         {
             Packets.Add(new Handshake());
-            Packets.Add(new LoginSuccess());
             Packets.Add(new Ping());
-            Packets.Add(new KeepAlive());
             Packets.Add(new PlayerPosition());
             Packets.Add(new PlayerPositionAndLook());
             Packets.Add(new PlayerLook());

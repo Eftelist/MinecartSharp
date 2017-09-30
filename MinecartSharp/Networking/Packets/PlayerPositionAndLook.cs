@@ -17,7 +17,7 @@ namespace MinecartSharp.Networking.Packets
         {
             get
             {
-                return 0x06;
+                return 0x0E;
             }
         }
 

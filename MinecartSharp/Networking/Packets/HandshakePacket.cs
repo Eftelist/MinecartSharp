@@ -81,7 +81,7 @@ namespace MinecaftSharp.Networking.Packets
         {
             string username = buffer.ReadUsername();
             string UUID = getUUID(username);
-            Program.Logger.Log(LogType.Warning, "Logging in...");
+            Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
             new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
             Globals.LastUniqueID++;
             state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative };
@@ -105,34 +105,41 @@ namespace MinecaftSharp.Networking.Packets
 
         private string getUUID(string username)
         {
-            using(WebClient webClient = new WebClient())
+            using (WebClient webClient = new WebClient())
             {
+               
                 string result = "";
-
                 try
                 {
-                    result =
-                        webClient.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + username + "?at=" + (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+                    result = webClient.UploadString("https://api.mojang.com/profiles/minecraft", $"[\"{username}\"]");
+                    
                 }
                 catch (WebException e)
                 {
                     Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username " + username);
+                    Globals.Logger.Log(LogType.Error, e.Message);
                     return "";
                 }
 
                 dynamic json = JsonConvert.DeserializeObject(result);
-
-                if (json.Count > 1)
+                if (json.Count > 0)
                 {
-                    string UUID = json.id;
-                    Program.Logger.Log(LogType.Info, "UUID = " + new Guid(UUID).ToString());
-                    return new Guid(UUID).ToString();
+                    string UUID = json[0].id;
+                    Globals.Logger.Log(LogType.Info, "UUID = " + Guid.Parse(UUID).ToString());
+                    return Guid.Parse(UUID).ToString();
                 }
                 else
                 {
                     return "";
                 }
             }
+        }
+
+        public static Guid ToGuid(int value)
+        {
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(value).CopyTo(bytes, 0);
+            return new Guid(bytes);
         }
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)

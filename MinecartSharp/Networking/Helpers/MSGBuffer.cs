@@ -123,7 +123,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
         {
             byte[] NoEdit = Encoding.UTF8.GetBytes(ReadString());
             List<byte> t = new List<byte>();
-
+            
             int D = 0;
             foreach (byte i in NoEdit)
             {
