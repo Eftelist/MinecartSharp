@@ -3,179 +3,141 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using fNbt;
+using System.Net;
 
-namespace MiNET.Utils
+namespace Utils.Extra
 {
     /// <summary>
-    ///     BinaryReader wrapper that takes care of reading primitives from an NBT stream,
-    ///     while taking care of endianness, string encoding, and skipping.
+    ///     BinaryWriter wrapper that takes care of writing primitives to an NBT stream,
+    ///     while taking care of endianness and string encoding.
     /// </summary>
-    public class NbtBinaryReader : BinaryReader
+    internal class NbtBinaryWriter : BinaryWriter
     {
-        private readonly byte[] floatBuffer = new byte[sizeof(float)],
-            doubleBuffer = new byte[sizeof(double)];
-
-        private byte[] seekBuffer;
-        private const int SeekBufferSize = 64 * 1024;
         private readonly bool bigEndian;
 
 
-        public NbtBinaryReader(Stream input, bool bigEndian)
+        public NbtBinaryWriter(Stream input, bool bigEndian)
             : base(input)
         {
             this.bigEndian = bigEndian;
         }
 
 
-        public NbtTagType ReadTagType()
+        public void Write(NbtTagType value)
         {
-            var type = (NbtTagType)ReadByte();
-            if (type < NbtTagType.End || type > NbtTagType.IntArray)
+            Write((byte)value);
+        }
+
+        public void WriteVarInt(int Integer)
+        {
+            while ((Integer & -128) != 0)
             {
-                throw new NbtFormatException("NBT tag type out of range: " + (int)type);
+                Write((byte)(Integer & 127 | 128));
+                Integer = (int)(((uint)Integer) >> 7);
             }
-            return type;
+            Write((byte)Integer);
         }
 
-
-        public override short ReadInt16()
-        {
-            return BitConverter.IsLittleEndian == bigEndian ? NbtBinaryWriter.Swap(base.ReadInt16()) : base.ReadInt16();
-        }
-
-
-        public override int ReadInt32()
-        {
-            return BitConverter.IsLittleEndian == bigEndian ? NbtBinaryWriter.Swap(base.ReadInt32()) : base.ReadInt32();
-        }
-
-
-        public override long ReadInt64()
-        {
-            return BitConverter.IsLittleEndian == bigEndian ? NbtBinaryWriter.Swap(base.ReadInt64()) : base.ReadInt64();
-        }
-
-
-        public override float ReadSingle()
+        public override void Write(short value)
         {
             if (BitConverter.IsLittleEndian == bigEndian)
             {
-                BaseStream.Read(floatBuffer, 0, sizeof(float));
-                Array.Reverse(floatBuffer);
-                return BitConverter.ToSingle(floatBuffer, 0);
+                base.Write(IPAddress.HostToNetworkOrder(value));
             }
-            return base.ReadSingle();
+            else
+            {
+                base.Write(value);
+            }
         }
 
 
-        public override double ReadDouble()
+        public override void Write(int value)
         {
             if (BitConverter.IsLittleEndian == bigEndian)
             {
-                BaseStream.Read(doubleBuffer, 0, sizeof(double));
-                Array.Reverse(doubleBuffer);
-                return BitConverter.ToDouble(doubleBuffer, 0);
+                base.Write(Swap(value));
             }
-            return base.ReadDouble();
-        }
-
-
-        public override string ReadString()
-        {
-            short length = ReadInt16();
-            if (length < 0)
+            else
             {
-                throw new NbtFormatException("Negative string length given!");
-            }
-            byte[] stringData = ReadBytes(length);
-            return Encoding.UTF8.GetString(stringData);
-        }
-
-
-        public void Skip(int bytesToSkip)
-        {
-            if (bytesToSkip < 0)
-            {
-                throw new ArgumentOutOfRangeException("bytesToSkip");
-            }
-            else if (BaseStream.CanSeek)
-            {
-                BaseStream.Position += bytesToSkip;
-            }
-            else if (bytesToSkip != 0)
-            {
-                if (seekBuffer == null)
-                    seekBuffer = new byte[SeekBufferSize];
-                int bytesDone = 0;
-                while (bytesDone < bytesToSkip)
-                {
-                    int readThisTime = BaseStream.Read(seekBuffer, bytesDone, bytesToSkip - bytesDone);
-                    if (readThisTime == 0)
-                    {
-                        throw new EndOfStreamException();
-                    }
-                    bytesDone += readThisTime;
-                }
+                base.Write(value);
             }
         }
 
 
-        public void SkipString()
+        public override void Write(long value)
         {
-            short length = ReadInt16();
-            if (length < 0)
+            if (BitConverter.IsLittleEndian == bigEndian)
             {
-                throw new NbtFormatException("Negative string length given!");
+                base.Write(Swap(value));
             }
-            Skip(length);
-        }
-
-
-        public TagSelector Selector { get; set; }
-    }
-
-    /// <summary>
-    ///     DeflateStream wrapper that calculates Adler32 checksum of the written data,
-    ///     to allow writing ZLib header (RFC-1950).
-    /// </summary>
-    internal sealed class ZLibStream : DeflateStream
-    {
-        private int adler32A = 1, adler32B;
-        private MemoryStream _buffer = new MemoryStream();
-
-        private const int ChecksumModulus = 65521;
-
-        public int Checksum
-        {
-            get
+            else
             {
-                UpdateChecksum(_buffer.ToArray(), 0, _buffer.Length);
-                return ((adler32B * 65536) + adler32A);
+                base.Write(value);
             }
         }
 
 
-        private void UpdateChecksum(byte[] data, int offset, long length)
+        public override void Write(float value)
         {
-            for (long counter = 0; counter < length; ++counter)
+            if (BitConverter.IsLittleEndian == bigEndian)
             {
-                adler32A = (adler32A + (data[offset + counter])) % ChecksumModulus;
-                adler32B = (adler32B + adler32A) % ChecksumModulus;
+                byte[] floatBytes = BitConverter.GetBytes(value);
+                Array.Reverse(floatBytes);
+                Write(floatBytes);
+            }
+            else
+            {
+                base.Write(value);
             }
         }
 
 
-        public ZLibStream(Stream stream, CompressionLevel level, bool leaveOpen)
-            : base(stream, level, leaveOpen)
+        public override void Write(double value)
         {
+            if (BitConverter.IsLittleEndian == bigEndian)
+            {
+                byte[] doubleBytes = BitConverter.GetBytes(value);
+                Array.Reverse(doubleBytes);
+                Write(doubleBytes);
+            }
+            else
+            {
+                base.Write(value);
+            }
         }
 
 
-        public override void Write(byte[] array, int offset, int count)
+        public override void Write(string value)
         {
-            //			UpdateChecksum(array, offset, count);
-            _buffer.Write(array, offset, count);
-            base.Write(array, offset, count);
+            if (value == null)
+                throw new ArgumentNullException("value");
+            var bytes = Encoding.UTF8.GetBytes(value);
+            Write((short)bytes.Length);
+            Write(bytes);
+        }
+
+
+        public static short Swap(short v)
+        {
+            return (short)((v >> 8) & 0x00FF |
+                            (v << 8) & 0xFF00);
+        }
+
+
+        public static int Swap(int v)
+        {
+            uint v2 = (uint)v;
+            return (int)((v2 >> 24) & 0x000000FF |
+                        (v2 >> 8) & 0x0000FF00 |
+                        (v2 << 8) & 0x00FF0000 |
+                        (v2 << 24) & 0xFF000000);
+        }
+
+
+        public static long Swap(long v)
+        {
+            return (Swap((int)v) & uint.MaxValue) << 32 |
+                    Swap((int)(v >> 32)) & uint.MaxValue;
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using MinecartSharp.MinecaftSharp.Networking.Interfaces;
+using MinecartSharp.MinecartSharp.Networking;
 using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecartSharp.Objects;
+using MinecartSharp.MinecartSharp.Networking.Packets;
 using MinecartSharp.MinecartSharp.Networking.Wrappers;
+using MinecartSharp.MinecartSharp.Objects;
+using MinecartSharp.Networking.Packets;
+using MinecartSharp.Utils;
 using MinecraftSharp.MinecartSharp.Objects;
 using System;
 using System.Net;
-using MinecartSharp.Networking.Packets;
 
-namespace MinecartSharp.MinecartSharp.Networking.Packets
+namespace MinecartSharp.MinecaftSharp.Networking.Packets
 {
-    public class HandshakePacket : IPacket
+    public class Handshake : IPacket
     {
         public int PacketID
         {
@@ -56,7 +59,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
         {
             string Username = buffer.ReadUsername();
             string UUID = getUUID(Username);
-
+            Program.Logger.Log(LogType.Warning, "Logging in...");
             new LoginSuccess().Write(state, buffer, new object[] { UUID, Username });
             Globals.LastUniqueID++;
             state.Player = new Player() { UUID = UUID, Username = Username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative };
@@ -66,15 +69,16 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
                 new SetCompression().Write(state, buffer, new object[] { -1 }); //Turn off compression.
 
             new JoinGame().Write(state, buffer, new object[0]);
-            //   for (int i = 0; i < 49; i++)
-            //  {
-            new ChunkData().Write(state, buffer, new object[] { Globals.ChunkColums[0].GetBytes() }); //Just testing if the packet get's received correctly by the client...
-                                                                                                      //    }
+            for (int i = 0; i < Globals.ChunkColums.Count; i++)
+            {
+                new ChunkData().Write(state, buffer, new object[] { Globals.ChunkColums[i].GetBytes() }); //Just testing if the packet get's received correctly by the client...
+            }
+            //  new MapChunkBulk ().Write (state, buffer, new object[0]);
             new SpawnPosition().Write(state, buffer, new object[0]);
             new PlayerPositionAndLook().Write(state, buffer, new object[0]);
             //new KeepAlive ().Write (state, buffer, new object[0]);
             state.StartKeepAliveTimer();
-            //new MapChunkBulk ().Write (state, buffer, new object[0]);
+            state.Player.AddToList();
         }
 
         private string getUUID(string username)
@@ -85,6 +89,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Packets
             if (_result.Length > 1)
             {
                 string UUID = _result[3];
+                Program.Logger.Log(LogType.Info, "UUID = " + new Guid(UUID).ToString());
                 return new Guid(UUID).ToString();
             }
             else

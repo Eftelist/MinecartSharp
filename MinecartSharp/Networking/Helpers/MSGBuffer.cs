@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Net;
 using MinecartSharp.MinecartSharp.Networking.Wrappers;
 
 namespace MinecartSharp.MinecartSharp.Networking.Helpers
@@ -14,14 +15,19 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
         private int LastByte = 0;
         public byte[] BufferedData = new byte[4096];
 
-        public MSGBuffer(ClientWrapper client)
+        public MSGBuffer(ClientWrapper client, NetworkStream ns)
         {
             _Client = client;
-            mStream = client.TCPClient.GetStream();
+            mStream = ns;
+        }
+
+        public MSGBuffer(ClientWrapper clientWrapper)
+        {
+            _Client = clientWrapper;
         }
 
         #region Reader
-        private int ReadByte()
+        public int ReadByte()
         {
             byte returnData = BufferedData[LastByte];
             LastByte++;
@@ -34,6 +40,27 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
             Array.Copy(BufferedData, LastByte, Buffered, 0, Length);
             LastByte += Length;
             return Buffered;
+        }
+
+        public float ReadFloat()
+        {
+            byte[] Almost = Read(4);
+            return BitConverter.ToSingle(Almost, 0);
+        }
+
+        public bool ReadBool()
+        {
+            int Answer = ReadByte();
+            if (Answer == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public double ReadDouble()
+        {
+            byte[] AlmostValue = Read(8);
+            return BitConverter.ToDouble(AlmostValue, 0);
         }
 
         public int ReadVarInt()
@@ -113,6 +140,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
         #region Writer
         private List<byte> bffr = new List<byte>();
         private NetworkStream mStream;
+        private ClientWrapper clientWrapper;
 
         public void Write(byte[] Data, int Offset, int Length)
         {
@@ -153,7 +181,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
 
         public void WriteInt(int Data)
         {
-            byte[] Buffer = BitConverter.GetBytes(Data);
+            byte[] Buffer = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Data));
             Write(Buffer);
         }
 
@@ -192,7 +220,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
 
         public void WriteLong(long Data)
         {
-            Write(BitConverter.GetBytes(Data));
+            Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Data)));
         }
 
         /// <summary>
@@ -207,12 +235,14 @@ namespace MinecartSharp.MinecartSharp.Networking.Helpers
 
                 WriteVarInt(AllData.Length);
                 byte[] Buffer = bffr.ToArray();
+
                 mStream.Write(Buffer, 0, Buffer.Length);
                 mStream.Write(AllData, 0, AllData.Length);
                 bffr.Clear();
             }
             catch
             {
+ 
             }
         }
 

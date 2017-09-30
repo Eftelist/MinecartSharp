@@ -27,6 +27,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
+
             }
         }
 
@@ -40,6 +41,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
+   
             }
         }
 
@@ -53,7 +55,7 @@ namespace MinecartSharp.MinecartSharp.Networking.Wrappers
             }
             catch
             {
- 
+   
             }
         }
 

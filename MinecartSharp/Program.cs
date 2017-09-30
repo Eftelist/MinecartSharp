@@ -20,8 +20,15 @@ namespace MinecartSharp
         {
             Console.Title = "MinecartSharp server";
             Console.WriteLine("Starting MinecartSharp v{0}", Assembly.GetExecutingAssembly().GetName().Version);
+            Globals.setup();
             Globals.setupPackets();
-            Globals.loadDebugChunks();
+            Globals.LoadDebugChunks();
+
+            // time of day and other things
+
+            Globals.StartTimeOfDayTimer();
+
+
             // other things?
 
             Logger.Log(LogType.Info, "Loading server configuration");
@@ -37,8 +44,8 @@ namespace MinecartSharp
 
             //TODO: add world loading shit
 
-            Listener listener = new Listener();
-            new Thread((() => listener.HandleConnections())).Start();
+            var ClientListener = new Thread(() => new BasicListener().ListenForClientsAsync());
+            ClientListener.Start();
 
         }
     }
