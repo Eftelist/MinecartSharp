@@ -13,7 +13,7 @@ namespace MinecartSharp.Objects
         public Gamemode Gamemode { get; set; }
 
         //Location stuff
-        public byte Dimension { get; set; }
+        public int Dimension { get; set; }
         public Vector3 Coordinates { get; set; }
         public float Yaw { get; set; }
         public float Pitch { get; set; }

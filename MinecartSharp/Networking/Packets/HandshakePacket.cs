@@ -78,9 +78,9 @@ namespace MinecartSharp.Networking.Packets
             string username = buffer.ReadUsername();
             string UUID = getUUID(username);
             Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
-            new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
+            new LoginSuccess().Write(state, buffer, new object[] {UUID, username} );
             Globals.LastUniqueID++;
-            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative };
+            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0};
             state.PlayMode = true; //Toggle the boolean to PlayMode so we know we are not handling Status stuff anymore.
 
             if (!Globals.UseCompression)
@@ -102,7 +102,7 @@ namespace MinecartSharp.Networking.Packets
         private string getUUID(string username)
         {
             if (string.IsNullOrEmpty(username))
-                throw new Exception("username is empty");
+                return "";
 
             using (WebClient webClient = new WebClient())
             {

@@ -1,4 +1,5 @@
-﻿using MinecartSharp.Networking.Helpers;
+﻿using System;
+using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Wrappers;
 
@@ -32,7 +33,7 @@ namespace MinecartSharp.Networking.Packets
             buffer.WriteVarInt(PacketID);
             buffer.WriteInt(state.Player.UniqueServerID);
             buffer.WriteByte((byte)state.Player.Gamemode);
-            buffer.WriteByte((byte)state.Player.Dimension);
+            buffer.WriteInt(state.Player.Dimension);
             buffer.WriteByte((byte)Globals.Difficulty);
             buffer.WriteByte((byte)Globals.MaxPlayers);
             buffer.WriteString(Globals.LVLType);

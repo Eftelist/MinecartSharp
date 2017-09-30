@@ -189,6 +189,7 @@ namespace MinecartSharp.Networking.Helpers
         {
             byte[] StringData = Encoding.UTF8.GetBytes(Data);
             WriteVarInt(StringData.Length);
+            Console.WriteLine(Data + ":" + StringData.Length);
             Write(StringData);
         }
 
