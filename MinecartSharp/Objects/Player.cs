@@ -1,7 +1,7 @@
 ﻿using MinecartSharp.MinecartSharp.Objects;
-using MinecartSharp.MinecartSharp.Networking.Wrappers;
-using MinecartSharp.MinecartSharp.Networking;
 using System;
+using MinecartSharp;
+using MinecartSharp.MinecartSharp.Networking.Wrappers;
 
 namespace MinecraftSharp.MinecartSharp.Objects
 {

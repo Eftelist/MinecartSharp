@@ -1,5 +1,4 @@
 ﻿using MinecartSharp.MinecaftSharp.Networking.Interfaces;
-using MinecartSharp.MinecartSharp.Networking;
 using MinecartSharp.MinecartSharp.Networking.Helpers;
 using MinecartSharp.MinecartSharp.Networking.Packets;
 using MinecartSharp.MinecartSharp.Networking.Wrappers;
@@ -9,8 +8,11 @@ using MinecartSharp.Utils;
 using MinecraftSharp.MinecartSharp.Objects;
 using System;
 using System.Net;
+using MinecartSharp;
+using MinecartSharp.Networking.Objects;
+using Newtonsoft.Json;
 
-namespace MinecartSharp.MinecaftSharp.Networking.Packets
+namespace MinecaftSharp.Networking.Packets
 {
     public class Handshake : IPacket
     {
@@ -51,7 +53,27 @@ namespace MinecartSharp.MinecaftSharp.Networking.Packets
         private void HandleStatusRequest(ClientWrapper state, MSGBuffer buffer)
         {
             buffer.WriteVarInt(PacketID);
-            buffer.WriteString("{\"version\": {\"name\": \"" + Globals.ProtocolName + "\",\"protocol\": " + Globals.ProtocolVersion + "},\"players\": {\"max\": " + Globals.MaxPlayers + ",\"online\": " + Globals.PlayersOnline + "},\"description\": {\"text\":\"" + Globals.RandomMOTD + "\"}}");
+            //buffer.WriteString("{\"version\": {\"name\": \"" + Globals.ProtocolName + "\",\"protocol\": " + Globals.ProtocolVersion + "},\"players\": {\"max\": " + Globals.MaxPlayers + ",\"online\": " + Globals.PlayersOnline + "},\"description\": {\"text\":\"" + Globals.RandomMOTD + "\"}}");
+            Serverping serverlistping = new Serverping()
+            {
+                Version = new ServerpingVersion()
+                {
+                    Name = Globals.ProtocolName,
+                    Protocol = Globals.ProtocolVersion
+                },
+                Players = new ServerpingPlayers()
+                {
+                    Max = Globals.MaxPlayers,
+                    Online = Globals.PlayersOnline,
+                },
+                Description = new ServerpingDescription()
+                {
+                    Motd = Globals.Config.Motd
+                },
+                Favicon = ""
+            };
+
+            buffer.WriteString(JsonConvert.SerializeObject(serverlistping));
             buffer.FlushData();
         }
 

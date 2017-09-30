@@ -12,16 +12,18 @@ using MinecraftSharp.MinecartSharp.Objects;
 using System.Threading;
 using System.Timers;
 using MinecartSharp.MinecartSharp.Networking.Helpers;
-using MinecartSharp.MinecaftSharp.Networking.Packets;
+using MinecaftSharp.Networking.Packets;
 
-namespace MinecartSharp.MinecartSharp.Networking
+namespace MinecartSharp
 {
     internal class Globals
     {
-        public static string ProtocolName = "MinecartSharp 1.12";
+        public static string ProtocolName = "MinecartSharp 1.12.2";
         public static int ProtocolVersion = 340;
         public static int MaxPlayers = 10;
         public static int PlayersOnline = 0;
+        public static Config Config;
+        public static String Favicon;
         internal static List<IPacket> Packets = new List<IPacket>();
         public static int LastUniqueID = 0;
         public static byte Difficulty = 0;
@@ -81,23 +83,6 @@ namespace MinecartSharp.MinecartSharp.Networking
             Packets.Add(new PlayerLook());
             Packets.Add(new ClientSettings());
             Packets.Add(new OnGround());
-        }
-        public static string[] ServerMOTD = new string[]
-        {
-            "§6§lSharpMC\n-§eComplete rewrite!",
-            "§6§lSharpMC\n-§eThis server is written by Wuppie/Kennyvv!",
-            "§6§lSharpMC\n-§eC# Powered!",
-            "§6§lSharpMC\n-§eNow supports Minecraft 1.8 (Partially)"
-        };
-
-        public static string RandomMOTD
-        {
-            get
-            {
-                Random i = new Random();
-                int Chosen = i.Next(0, ServerMOTD.Length);
-                return ServerMOTD[Chosen];
-            }
         }
 
         #region TickTimer

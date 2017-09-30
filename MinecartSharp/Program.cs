@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using MinecartSharp.Networking;
 using MinecartSharp.Utils;
 using MinecartSharp.MinecartSharp.Networking;
 
@@ -13,7 +11,6 @@ namespace MinecartSharp
     class Program
     {
 
-        public static Config Configuration = new Config();
         public static Logger Logger = new Logger();
 
         static void Main(string[] args)
@@ -40,7 +37,12 @@ namespace MinecartSharp
                 }
             }
 
-            Configuration = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
+            Globals.Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
+
+            if (File.Exists("server-icon.png"))
+            {
+                //TODO: add favicon code to load as base64
+            }
 
             //TODO: add world loading shit
 
