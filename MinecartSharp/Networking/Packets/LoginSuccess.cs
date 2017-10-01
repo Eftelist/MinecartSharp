@@ -30,11 +30,8 @@ namespace MinecartSharp.Networking.Packets
         {
            
             buffer.WriteVarInt(PacketID);
-            string uuid = Arguments[0].ToString();
-            string user = Arguments[1].ToString();
-            buffer.WriteString(uuid);
-            buffer.WriteString(user);
-            Globals.Logger.Log(Utils.LogType.Error, "uuidandshit: " + uuid + " : " +user);
+            buffer.WriteString(Arguments[0].ToString());
+            buffer.WriteString(Arguments[1].ToString());
             buffer.FlushData();
         }
     }
