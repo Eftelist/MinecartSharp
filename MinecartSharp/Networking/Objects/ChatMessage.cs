@@ -9,10 +9,31 @@ namespace MinecartSharp.Networking.Objects
 {
     class ChatMessage
     {
-        [JsonProperty("text")]
-        public string Text;
+        [JsonProperty("text")] public string Text;
 
-        //TODO: add bold, underlined and extra array http://wiki.vg/Chat#Inheritance
+        [JsonProperty("bold")] public bool Bold;
+        [JsonProperty("obfuscated")] public bool Obfuscated;
+        [JsonProperty("strikethrough")] public bool Strikethrough;
+        [JsonProperty("underlineD")] public bool Underline;
+        [JsonProperty("italic")] public bool Italic;
 
+        [JsonProperty("color")] public string Color;
+
+        [JsonProperty("extra")] public List<ExtraText> Extra;
+
+        //TODO: add clickevents, hoverevents etc
+    }
+
+    class ExtraText
+    {
+        [JsonProperty("text")] public string Text;
+
+        [JsonProperty("bold")] public bool Bold;
+        [JsonProperty("obfuscated")] public bool Obfuscated;
+        [JsonProperty("strikethrough")] public bool Strikethrough;
+        [JsonProperty("underlineD")] public bool Underline;
+        [JsonProperty("italic")] public bool Italic;
+
+        [JsonProperty("color")] public string Color;
     }
 }
