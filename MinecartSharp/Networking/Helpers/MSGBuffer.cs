@@ -42,16 +42,10 @@ namespace MinecartSharp.Networking.Helpers
             return Buffered;
         }
 
-        public void WriteLong(long Data)
-        {
-            Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Data)));
-        }
-
         public float ReadFloat()
         {
             byte[] Almost = Read(4);
-            float f = BitConverter.ToSingle(Almost, 0);
-            return f;
+            return BitConverter.ToSingle(Almost, 0);
         }
 
         public bool ReadBool()
@@ -103,9 +97,13 @@ namespace MinecartSharp.Networking.Helpers
 
         public short ReadShort()
         {
-            byte[] Da = Read(2);
-            short D = BitConverter.ToInt16(Da, 0);
-            return IPAddress.NetworkToHostOrder(D);
+            int o = ReadByte();
+            int i = ReadByte();
+
+            if (BitConverter.IsLittleEndian)
+                return BitConverter.ToInt16(new byte[2] { (byte)i, (byte)o }, 0);
+            else
+                return BitConverter.ToInt16(new byte[2] { (byte)o, (byte)i }, 0);
 
         }
 
@@ -116,25 +114,6 @@ namespace MinecartSharp.Networking.Helpers
             return Encoding.UTF8.GetString(StringValue);
         }
 
-        private double NetworkToHostOrder(byte[] data)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(data);
-            }
-            return BitConverter.ToDouble(data, 0);
-        }
-
-        private float NetworkToHostOrder(float network)
-        {
-            byte[] bytes = BitConverter.GetBytes(network);
-
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-
-            return BitConverter.ToSingle(bytes, 0);
-       }
-
         /// <summary>
         /// Reads the username. (We cannot just use ReadString() because of some weird bug)...
         /// Idk what happend, but it seems to send an extra byte for the username there...
@@ -144,7 +123,7 @@ namespace MinecartSharp.Networking.Helpers
         {
             byte[] NoEdit = Encoding.UTF8.GetBytes(ReadString());
             List<byte> t = new List<byte>();
-            
+
             int D = 0;
             foreach (byte i in NoEdit)
             {
@@ -232,38 +211,23 @@ namespace MinecartSharp.Networking.Helpers
 
         public void WriteDouble(double Data)
         {
-            Write(HostToNetworkOrder(Data));
+            Write(BitConverter.GetBytes(Data));
         }
 
         public void WriteFloat(float Data)
         {
-            Write(HostToNetworkOrder(Data));
+            Write(BitConverter.GetBytes(Data));
         }
 
-        private byte[] HostToNetworkOrder(float host)
+        public void WriteLong(long Data)
         {
-            byte[] bytes = BitConverter.GetBytes(host);
+            Write(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Data)));
+        }
 
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-
-            return bytes;
-
-          }
-        private byte[] HostToNetworkOrder(double d)
-        {
-            byte[] data = BitConverter.GetBytes(d);
-            if (BitConverter.IsLittleEndian)
-            {
-               Array.Reverse(data);
-            }
-            return data;
-         }
-
-/// <summary>
-/// Flush all data to the TCPClient NetworkStream.
-/// </summary>
-public void FlushData()
+        /// <summary>
+        /// Flush all data to the TCPClient NetworkStream.
+        /// </summary>
+        public void FlushData()
         {
             try
             {

@@ -1,5 +1,6 @@
 ﻿using MinecartSharp.Utils;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
@@ -78,13 +79,9 @@ namespace MinecartSharp.Networking.Packets
             string username = buffer.ReadUsername();
             string UUID = getUUID(username);
             Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
-            try
-            {
-                new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
-            } catch(Exception e)
-            {
-                Globals.Logger.Log(LogType.Error, e.Message);
-            }
+
+            new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
+
             Globals.LastUniqueID++;
             state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0};
             state.PlayMode = true; //Toggle the boolean to PlayMode so we know we are not handling Status stuff anymore.

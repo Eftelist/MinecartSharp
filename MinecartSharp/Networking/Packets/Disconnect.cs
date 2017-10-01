@@ -44,7 +44,10 @@ namespace MinecartSharp.Networking.Packets
             {
                 buffer.WriteVarInt(0x00);
             }
-            buffer.WriteString(JsonConvert.SerializeObject((ChatMessage)Arguments[0]));
+            buffer.WriteString(JsonConvert.SerializeObject((ChatMessage)Arguments[0], new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            }));
             buffer.FlushData();
         }
     }
