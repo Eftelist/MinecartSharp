@@ -36,7 +36,7 @@ namespace MinecartSharp
 
         public static void setup()
         {
-                   ServerListener = new TcpListener(IPAddress.Any, Config.Port);
+                   ServerListener = new TcpListener(IPAddress.Any, 25565);
         }
 
         public static void LoadDebugChunks()
