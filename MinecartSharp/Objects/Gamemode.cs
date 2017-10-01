@@ -1,11 +1,10 @@
-﻿using System;
-
-namespace MinecartSharp.Objects
+﻿namespace MinecartSharp.Objects
 {
     public enum Gamemode : byte
     {
-        Creative = 1,
         Surival = 0,
-        Adventure = 2
+        Creative = 1,
+        Adventure = 2,
+        Spectator = 3
     }
 }

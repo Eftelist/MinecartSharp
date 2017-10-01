@@ -38,6 +38,7 @@ namespace MinecartSharp
             }
 
             Globals.Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
+            Globals.MaxPlayers = Globals.Config.MaxPlayer;
 
             if (File.Exists("server-icon.png"))
             {

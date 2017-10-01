@@ -19,7 +19,7 @@ namespace MinecartSharp
     {
         public static string ProtocolName = "MinecartSharp 1.12.2";
         public static int ProtocolVersion = 340;
-        public static int MaxPlayers = 10;
+        public static int MaxPlayers;
         public static int PlayersOnline = 0;
         public static Config Config;
         public static String Favicon;
@@ -36,7 +36,7 @@ namespace MinecartSharp
 
         public static void setup()
         {
-                   ServerListener = new TcpListener(IPAddress.Any, 25565);
+                   ServerListener = new TcpListener(IPAddress.Any, Config.Port);
         }
 
         public static void LoadDebugChunks()
