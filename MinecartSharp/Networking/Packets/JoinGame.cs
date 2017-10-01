@@ -38,6 +38,7 @@ namespace MinecartSharp.Networking.Packets
             buffer.WriteByte((byte)Globals.MaxPlayers);
             buffer.WriteString(Globals.LVLType);
             buffer.WriteBool(false);
+            Globals.Logger.Log(Utils.LogType.Error, Globals.LVLType);
             buffer.FlushData();
         }
     }

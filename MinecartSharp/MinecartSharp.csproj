@@ -69,6 +69,7 @@
     <Compile Include="Networking\Helpers\UUIDMojang.cs" />
     <Compile Include="Objects\Chunks\ChunkColumn.cs" />
     <Compile Include="Objects\Chunks\FlatLandGenerator.cs" />
+    <Compile Include="Objects\Chunks\IWorldProvider.cs" />
     <Compile Include="Objects\Vector2.cs" />
     <Compile Include="Objects\Vector3.cs" />
     <Compile Include="ObjectHelpers\INbtSerializable.cs" />

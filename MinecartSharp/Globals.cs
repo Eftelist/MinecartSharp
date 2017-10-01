@@ -42,25 +42,7 @@ namespace MinecartSharp
         public static void LoadDebugChunks()
         {
             Program.Logger.Log(Utils.LogType.Info, "Generating debug chunks");
-            Globals.ChunkColums.Add(Globals.WorldGen.GenerateChunkColumn(new Vector2(0, 0)));
-            /*   int r = 49; //Radius. (13*4 = 52) and we need 49 Chunks for a player to spawn. So this should be fine :)
-               int ox = 0, oy = 0; //Middle point
-
-               int done = 0;
-               for (int x = -r; x < r ; x++)
-               {
-                   int height = (int)Math.Sqrt(r * r - x * x);
-
-                   for (int y = -height; y < height; y++)
-                   {
-                       Globals.ChunkColums.Add (Globals.WorldGen.GenerateChunkColumn (new Vector2 (x + ox, y + oy)));
-                       done++;
-                       if (done == r)
-                           break;
-                   }
-                   if (done == r)
-                       break;
-               }*/
+            Globals.WorldGen.GenerateChunkColumn(new Vector2(0, 0));
             Program.Logger.Log(Utils.LogType.Info, "Done debug chunks");
         }
 

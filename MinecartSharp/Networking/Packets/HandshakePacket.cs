@@ -78,7 +78,13 @@ namespace MinecartSharp.Networking.Packets
             string username = buffer.ReadUsername();
             string UUID = getUUID(username);
             Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
-            new LoginSuccess().Write(state, buffer, new object[] {UUID, username} );
+            try
+            {
+                new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
+            } catch(Exception e)
+            {
+                Globals.Logger.Log(LogType.Error, e.Message);
+            }
             Globals.LastUniqueID++;
             state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0};
             state.PlayMode = true; //Toggle the boolean to PlayMode so we know we are not handling Status stuff anymore.
@@ -86,17 +92,14 @@ namespace MinecartSharp.Networking.Packets
             if (!Globals.UseCompression)
                 new SetCompression().Write(state, buffer, new object[] { -1 }); //Turn off compression.
 
-            new JoinGame().Write(state, buffer, new object[0]);
-            for (int i = 0; i < Globals.ChunkColums.Count; i++)
-            {
-                new ChunkData().Write(state, buffer, new object[] { Globals.ChunkColums[i].GetBytes() }); //Just testing if the packet get's received correctly by the client...
-            }
+            new JoinGame().Write(state, buffer, new object[] { state.Player });
             //  new MapChunkBulk ().Write (state, buffer, new object[0]);
             new SpawnPosition().Write(state, buffer, new object[0]);
-            new PlayerPositionAndLook().Write(state, buffer, new object[0]);
+            // new PlayerPositionAndLook().Write(state, buffer, new object[0]);
             //new KeepAlive ().Write (state, buffer, new object[0]);
             state.StartKeepAliveTimer();
             state.Player.AddToList();
+            state.Player.SendChunksFromPosition();
         }
 
         private string getUUID(string username)
