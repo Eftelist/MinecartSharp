@@ -31,18 +31,18 @@ namespace MinecartSharp.Networking.Packets
 
         public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
-            int Protocol = buffer.ReadVarInt();
-            string Host = buffer.ReadString();
-            short Port = buffer.ReadShort();
-            int State = buffer.ReadVarInt();
+            int protocol = buffer.ReadVarInt();
+            string host = buffer.ReadString();
+            short port = buffer.ReadShort();
+            int nextstate = buffer.ReadVarInt();
 
-            switch (State)
+            switch (nextstate)
             {
                 case 1:
                     HandleStatusRequest(state, buffer);
                     break;
                 case 2:
-                    HandleLoginRequest(state, buffer);
+                    HandleLoginRequest(state, buffer, protocol);
                     break;
             }
         }
@@ -74,9 +74,37 @@ namespace MinecartSharp.Networking.Packets
             buffer.FlushData();
         }
 
-        private void HandleLoginRequest(ClientWrapper state, MSGBuffer buffer)
+        private void HandleLoginRequest(ClientWrapper state, MSGBuffer buffer, int protocol)
         {
+            if (protocol < Globals.ProtocolVersion)
+            {
+                new Disconnect().Write(state, buffer, new []{ new ChatMessage()
+                {
+                    Text = "This server is running " + Globals.ProtocolName + " please upgrade your client!"
+                }});
+                return;
+            }
+
+            if (protocol > Globals.ProtocolVersion)
+            {
+                new Disconnect().Write(state, buffer, new[]{ new ChatMessage()
+                {
+                    Text = "This server is still running " + Globals.ProtocolName + " please downgrade your client!"
+                }});
+                return;
+            }
+
             string username = buffer.ReadUsername();
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                new Disconnect().Write(state, buffer, new[]{ new ChatMessage()
+                {
+                    Text = "Something got wrong with parsing your username, please try again later!"
+                }});
+                return;
+            }
+
             string UUID = getUUID(username);
             Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
             

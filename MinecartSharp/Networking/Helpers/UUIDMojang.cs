@@ -5,8 +5,8 @@ namespace MinecartSharp.Networking.Helpers
     public class UUIDMojang
     {
         [JsonProperty("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }
