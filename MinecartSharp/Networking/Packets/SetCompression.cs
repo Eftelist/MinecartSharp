@@ -18,7 +18,7 @@ namespace MinecartSharp.Networking.Packets
             {
                 get
                 {
-                    return true;
+                    return false;
                 }
             }
 

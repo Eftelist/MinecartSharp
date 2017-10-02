@@ -26,7 +26,6 @@ namespace MinecartSharp
         internal static List<IPacket> Packets = new List<IPacket>();
         public static int LastUniqueID = 0;
         public static byte Difficulty = 0;
-        public static bool UseCompression = false;
         public static TcpListener ServerListener;
         public static List<Player> Players = new List<Player>();
         public static long TimeOfDay = 1200;

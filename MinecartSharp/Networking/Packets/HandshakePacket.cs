@@ -79,18 +79,15 @@ namespace MinecartSharp.Networking.Packets
             string username = buffer.ReadUsername();
             string UUID = getUUID(username);
             Program.Logger.Log(LogType.Warning, "Logging in : " + UUID);
-
+            
             new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
 
             Globals.LastUniqueID++;
-            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0};
+            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0 };
             state.PlayMode = true; //Toggle the boolean to PlayMode so we know we are not handling Status stuff anymore.
 
-            if (!Globals.UseCompression)
-                new SetCompression().Write(state, buffer, new object[] { -1 }); //Turn off compression.
-
             new JoinGame().Write(state, buffer, new object[] { state.Player });
-            //  new MapChunkBulk ().Write (state, buffer, new object[0]);
+            // new MapChunkBulk ().Write (state, buffer, new object[0]);
             new SpawnPosition().Write(state, buffer, new object[0]);
             // new PlayerPositionAndLook().Write(state, buffer, new object[0]);
             //new KeepAlive ().Write (state, buffer, new object[0]);
