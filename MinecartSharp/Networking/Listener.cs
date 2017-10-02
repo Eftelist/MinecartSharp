@@ -5,6 +5,7 @@ using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Wrappers;
 using System;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Packets;
 
 namespace MinecartSharp.Networking
@@ -64,7 +65,7 @@ namespace MinecartSharp.Networking
                 } catch(Exception e)
                 {
                     Globals.Logger.Log(LogType.Error, e.Message);
-                    new Disconnect().Write(Client, new MSGBuffer(Client), new object[] { "Server threw an exception!" });
+                    new Disconnect().Write(Client, new MSGBuffer(Client), new object[] { new ChatMessage(){ Text = "Server threw an exception!" } });
                     break;
                 }
             }

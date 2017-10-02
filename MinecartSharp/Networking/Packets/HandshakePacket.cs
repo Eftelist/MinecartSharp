@@ -84,7 +84,7 @@ namespace MinecartSharp.Networking.Packets
 
             Globals.LastUniqueID++;
             state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0 };
-            state.PlayMode = true; //Toggle the boolean to PlayMode so we know we are not handling Status stuff anymore.
+            state.PlayMode = true;
 
             new JoinGame().Write(state, buffer, new object[] { state.Player });
             // new MapChunkBulk ().Write (state, buffer, new object[0]);
