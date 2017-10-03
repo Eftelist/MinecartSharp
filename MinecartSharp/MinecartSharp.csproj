@@ -58,7 +58,7 @@
     <Compile Include="Networking\Packets\ClientSettings.cs" />
     <Compile Include="Networking\Packets\Disconnect.cs" />
     <Compile Include="Networking\Packets\JoinGame.cs" />
-    <Compile Include="Networking\Packets\OnGroud.cs" />
+    <Compile Include="Networking\Packets\OnGround.cs" />
     <Compile Include="Networking\Packets\Ping.cs" />
     <Compile Include="Networking\Packets\PlayerLook.cs" />
     <Compile Include="Networking\Packets\PlayerPosition.cs" />

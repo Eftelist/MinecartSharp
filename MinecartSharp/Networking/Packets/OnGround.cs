@@ -2,7 +2,7 @@
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Wrappers;
 
-namespace MinecartSharp.MinecartSharp.Networking.Packets
+namespace MinecartSharp.Networking.Packets
 {
     public class OnGround : IPacket
     {

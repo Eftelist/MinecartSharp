@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MinecartSharp.MinecartSharp.Networking.Packets;
 using MinecartSharp.Objects;
 using MinecartSharp.Networking.Packets;
 using MinecartSharp.Objects.Chunks;
-using MinecartSharp.MinecartSharp.Objects.Chunks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
