@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Build.Tasks.Xaml;
 using MinecartSharp.Networking.Helpers;
@@ -55,8 +56,10 @@ namespace MinecartSharp.Networking.Packets
                 NullValueHandling = NullValueHandling.Ignore
             });
 
-            //TODO: send message to all players
-            Write(state, buffer, new object[]{ json, (byte)0});
+            foreach (var player in Globals.Players)
+            {
+                Write(player.Wrapper, player.buffer, new object[] { json, (byte)0 });
+            }
         }
 
         private void HandleCommand(ClientWrapper state, MSGBuffer buffer, string msg)

@@ -61,7 +61,7 @@ namespace MinecartSharp.Networking.Packets
                 Players = new ServerpingPlayers()
                 {
                     Max = Globals.MaxPlayers,
-                    Online = Globals.PlayersOnline,
+                    Online = Globals.Players.Count,
                 },
                 Description = new ServerpingDescription()
                 {
@@ -111,7 +111,7 @@ namespace MinecartSharp.Networking.Packets
             new LoginSuccess().Write(state, buffer, new object[] { UUID, username });
 
             Globals.LastUniqueID++;
-            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, Gamemode = Gamemode.Creative, Dimension = 0 };
+            state.Player = new Player() { UUID = UUID, Username = username, UniqueServerID = Globals.LastUniqueID, Wrapper = state, buffer = buffer, Gamemode = Gamemode.Creative, Dimension = 0 };
             state.PlayMode = true;
 
             new JoinGame().Write(state, buffer, new object[] { state.Player });
@@ -120,7 +120,6 @@ namespace MinecartSharp.Networking.Packets
             new PlayerPositionAndLook().Write(state, buffer, new object[0]);
 
             state.StartKeepAliveTimer(state, buffer);
-            state.Player.AddToList();
             state.Player.SendChunksFromPosition();
         }
 

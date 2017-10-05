@@ -106,7 +106,7 @@ namespace MinecartSharp
 
             foreach (Player i in Globals.Players)
             {
-                new TimeUpdate().Write(i.Wrapper, new MSGBuffer(i.Wrapper), new object[0]);
+                new TimeUpdate().Write(i.Wrapper, i.buffer, new object[0]);
             }
         }
         #endregion

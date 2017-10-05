@@ -6,7 +6,9 @@ using MinecartSharp.MinecartSharp.Objects.Chunks;
 using System.ComponentModel;
 using MinecartSharp.Networking.Packets;
 using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Objects.Chunks;
+using Newtonsoft.Json;
 
 namespace MinecartSharp.Objects
 {
@@ -15,6 +17,8 @@ namespace MinecartSharp.Objects
         public string Username { get; set; }
         public string UUID { get; set; }
         public ClientWrapper Wrapper { get; set; }
+        public MSGBuffer buffer { get; set; }
+
         public int UniqueServerID { get; set; }
         public Gamemode Gamemode { get; set; }
         public bool IsSpawned { get; set; }
@@ -42,11 +46,6 @@ namespace MinecartSharp.Objects
              _chunksUsed = new Dictionary<string, ChunkColumn>();
         }
 
-        public void AddToList()
-        {
-            Globals.Players.Add(this);
-        }
-
         public void SendChunksFromPosition()
         {
             if (Coordinates == null)
@@ -55,6 +54,21 @@ namespace MinecartSharp.Objects
                 ViewDistance = 9;
             }
             SendChunksForKnownPosition(false);
+        }
+
+        public void SendMessage(string message)
+        {
+            var chatmessage = new ChatMessage()
+            {
+                Text = message
+            };
+
+            string json = JsonConvert.SerializeObject(chatmessage, new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            new ChatMessagePacket().Write(Wrapper, buffer, new object[]{ json, 0 });
         }
 
         public void SendChunksForKnownPosition(bool force = false)
