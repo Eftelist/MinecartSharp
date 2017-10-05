@@ -22,6 +22,10 @@ namespace MinecartSharp
         public static Config Config;
         public static String Favicon;
         internal static List<IPacket> Packets = new List<IPacket>();
+        public static List<McCommand> Commands = new List<McCommand>()
+        {
+           new commands.MinecartSharp()
+        };
         public static int LastUniqueID = 0;
         public static byte Difficulty = 0;
         public static TcpListener ServerListener;

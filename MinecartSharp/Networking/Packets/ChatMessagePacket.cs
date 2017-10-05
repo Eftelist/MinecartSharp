@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Build.Tasks.Xaml;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Objects;
@@ -53,12 +55,31 @@ namespace MinecartSharp.Networking.Packets
                 NullValueHandling = NullValueHandling.Ignore
             });
 
+            //TODO: send message to all players
             Write(state, buffer, new object[]{ json, (byte)0});
         }
 
         private void HandleCommand(ClientWrapper state, MSGBuffer buffer, string msg)
         {
-            
+            var commandname = msg.Split()[0].Remove(0, 1);
+
+            new Logger().Log(LogType.Info, $"{state.Player.Username} executed the command '{commandname}'");
+            var command = Globals.Commands.Single(x => x?.CommandName == commandname || x.Aliases.Contains(commandname));
+            if (command == null)
+            {
+                Write(state, buffer, new object[] { new ChatMessage(){Text = "Command not found, type /help for a list of available commands!" }, (byte)0 });
+                return;
+            }
+
+            new Logger().Log(LogType.Info, $"{state.Player.Username} executed the command '{commandname}'");
+
+            command.OnExecute(state.Player, new CommandContext()
+            {
+                State = state,
+                Buffer = buffer,
+                Parameters = msg.Split().Skip(1).ToArray(),
+                RawCommandString = commandname
+            });
         }
     }
 }
