@@ -106,7 +106,7 @@ namespace MinecartSharp.Objects
                     return i;
                 }
             }
-            throw new ArgumentOutOfRangeException("The specified player could not be found ;(");
+            throw new ArgumentOutOfRangeException("The specified player could not be found.");
         }
     }
 }

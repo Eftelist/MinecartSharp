@@ -119,7 +119,7 @@ namespace MinecartSharp.Networking.Packets
             new SpawnPosition().Write(state, buffer, new object[0]);
             new PlayerPositionAndLook().Write(state, buffer, new object[0]);
 
-            state.StartKeepAliveTimer();
+            state.StartKeepAliveTimer(state, buffer);
             state.Player.AddToList();
             state.Player.SendChunksFromPosition();
         }

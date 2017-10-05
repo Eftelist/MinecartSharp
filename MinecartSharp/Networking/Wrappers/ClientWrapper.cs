@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using System.Timers;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Packets;
@@ -61,11 +62,11 @@ namespace MinecartSharp.Networking.Wrappers
 
         Timer kTimer = new Timer();
 
-        public void StartKeepAliveTimer()
+        public void StartKeepAliveTimer(ClientWrapper client, MSGBuffer buffer)
         {
             kTimer.Elapsed += (sender, args) =>
             {
-                new KeepAlive().Write(this, new MSGBuffer(this), new object[0]);
+                new KeepAlive().Write(client, buffer, new object[0]);
             };
             kTimer.Interval = 10000;
             kTimer.Start();

@@ -60,6 +60,7 @@
     <Compile Include="Networking\Packets\JoinGame.cs" />
     <Compile Include="Networking\Packets\OnGround.cs" />
     <Compile Include="Networking\Packets\Ping.cs" />
+    <Compile Include="Networking\Packets\PlayerListItem.cs" />
     <Compile Include="Networking\Packets\PlayerLook.cs" />
     <Compile Include="Networking\Packets\PlayerPosition.cs" />
     <Compile Include="Networking\Packets\PlayerPositionAndLook.cs" />
