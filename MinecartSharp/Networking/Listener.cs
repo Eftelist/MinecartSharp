@@ -72,7 +72,10 @@ namespace MinecartSharp.Networking
             //Close the connection with the client. :)
             Client.StopKeepAliveTimer();
             if (Client.Player != null)
+            {
+                new Logger().Log(LogType.Info, $"{Client.Player.Username} left the game.");
                 Globals.Players.Remove(Client.Player);
+            }
             Client.TCPClient.Close();
         }
     }

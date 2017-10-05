@@ -1,6 +1,7 @@
 ﻿using MinecartSharp.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
@@ -62,7 +63,8 @@ namespace MinecartSharp.Networking.Packets
                 {
                     Max = Globals.MaxPlayers,
                     Online = Globals.Players.Count,
-                },
+                    Players = Globals.Players.Select(xp => new ServerpingPlayer { Name = xp.Username, Id = xp.UUID }).ToList()
+        },
                 Description = new ServerpingDescription()
                 {
                     Motd = Globals.Config.Motd
@@ -95,6 +97,7 @@ namespace MinecartSharp.Networking.Packets
             }
 
             string username = buffer.ReadUsername();
+            Console.WriteLine(username);
 
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -118,6 +121,8 @@ namespace MinecartSharp.Networking.Packets
             // new MapChunkBulk ().Write (state, buffer, new object[0]);
             new SpawnPosition().Write(state, buffer, new object[0]);
             new PlayerPositionAndLook().Write(state, buffer, new object[0]);
+
+            new Logger().Log(LogType.Info, $"{state.Player.Username} joined the game.");
 
             state.StartKeepAliveTimer(state, buffer);
             state.Player.SendChunksFromPosition();

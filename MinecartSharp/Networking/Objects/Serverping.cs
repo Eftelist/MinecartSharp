@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace MinecartSharp.Networking.Objects
@@ -23,6 +24,14 @@ namespace MinecartSharp.Networking.Objects
     {
         [JsonProperty("max")] public int Max;
         [JsonProperty("online")] public int Online;
+
+        [JsonProperty("sample")] public List<ServerpingPlayer> Players;
+    }
+
+    class ServerpingPlayer
+    {
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("id")] public string Id;
     }
 
     class ServerpingDescription
