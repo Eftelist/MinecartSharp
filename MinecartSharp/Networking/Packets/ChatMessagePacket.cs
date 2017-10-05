@@ -61,25 +61,7 @@ namespace MinecartSharp.Networking.Packets
 
         private void HandleCommand(ClientWrapper state, MSGBuffer buffer, string msg)
         {
-            var commandname = msg.Split()[0].Remove(0, 1);
-
-            new Logger().Log(LogType.Info, $"{state.Player.Username} executed the command '{commandname}'");
-            var command = Globals.Commands.Single(x => x?.CommandName == commandname || x.Aliases.Contains(commandname));
-            if (command == null)
-            {
-                Write(state, buffer, new object[] { new ChatMessage(){Text = "Command not found, type /help for a list of available commands!" }, (byte)0 });
-                return;
-            }
-
-            new Logger().Log(LogType.Info, $"{state.Player.Username} executed the command '{commandname}'");
-
-            command.OnExecute(state.Player, new CommandContext()
-            {
-                State = state,
-                Buffer = buffer,
-                Parameters = msg.Split().Skip(1).ToArray(),
-                RawCommandString = commandname
-            });
+            // fix later
         }
     }
 }

@@ -49,13 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="commands\MinecartSharp.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Networking\Helpers\ByteBuffer.cs" />
     <Compile Include="Networking\Helpers\MSGBuffer.cs" />
-    <Compile Include="Networking\Interfaces\CommandContext.cs" />
-    <Compile Include="Networking\Interfaces\McCommand.cs" />
     <Compile Include="Networking\Objects\ChatMessage.cs" />
     <Compile Include="Networking\Objects\Serverping.cs" />
     <Compile Include="Networking\Packets\ChatMessagePacket.cs" />
