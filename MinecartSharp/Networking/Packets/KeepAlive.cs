@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Wrappers;
@@ -11,7 +12,7 @@ namespace MinecartSharp.Networking.Packets
         {
             get
             {
-                return 0x1F;
+                return 0x0b;
             }
         }
 
@@ -25,14 +26,16 @@ namespace MinecartSharp.Networking.Packets
 
         public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
-
+            //TODO: add system to kick client if no keep alive is send for 20 seconds
         }
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
-            int id = new Random().Next(0, 100);
-            buffer.WriteVarInt(PacketID);
-            buffer.WriteVarInt(id);
+            // use the program uptime as keep alive id
+            double id = (DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMilliseconds;
+
+            buffer.WriteVarInt(0x1F);
+            buffer.WriteLong(Convert.ToInt64(id));
             buffer.FlushData();
         }
     }

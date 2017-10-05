@@ -118,7 +118,7 @@ namespace MinecartSharp.Networking.Packets
             // new MapChunkBulk ().Write (state, buffer, new object[0]);
             new SpawnPosition().Write(state, buffer, new object[0]);
             new PlayerPositionAndLook().Write(state, buffer, new object[0]);
-            //new KeepAlive ().Write (state, buffer, new object[0]);
+
             state.StartKeepAliveTimer();
             state.Player.AddToList();
             state.Player.SendChunksFromPosition();

@@ -63,19 +63,17 @@ namespace MinecartSharp.Networking.Wrappers
 
         public void StartKeepAliveTimer()
         {
-            kTimer.Elapsed += new ElapsedEventHandler(DisplayTimeEvent);
-            kTimer.Interval = 5000;
+            kTimer.Elapsed += (sender, args) =>
+            {
+                new KeepAlive().Write(this, new MSGBuffer(this), new object[0]);
+            };
+            kTimer.Interval = 10000;
             kTimer.Start();
         }
 
         public void StopKeepAliveTimer()
         {
             kTimer.Stop();
-        }
-
-        public void DisplayTimeEvent(object source, ElapsedEventArgs e)
-        {
-            new KeepAlive().Write(this, new MSGBuffer(this), new object[0]);
         }
     }
 }

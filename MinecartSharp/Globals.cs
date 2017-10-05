@@ -60,6 +60,7 @@ namespace MinecartSharp
             Packets.Add(new PlayerLook());
             Packets.Add(new ClientSettings());
             Packets.Add(new OnGround());
+            Packets.Add(new KeepAlive());
         }
 
         #region TickTimer
@@ -81,7 +82,7 @@ namespace MinecartSharp
         private static void StartTimeTimer()
         {
             kTimer.Elapsed += new ElapsedEventHandler(RunTick);
-            kTimer.Interval = 1000;
+            kTimer.Interval = 1;
             kTimer.Start();
         }
 
