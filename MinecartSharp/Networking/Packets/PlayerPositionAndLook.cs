@@ -40,13 +40,14 @@ namespace MinecartSharp.Networking.Packets
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
         {
-            buffer.WriteVarInt(0x08);
-            buffer.WriteDouble(Globals.WorldGen.GetSpawnPoint().X);
-            buffer.WriteDouble(Globals.WorldGen.GetSpawnPoint().Y);
-            buffer.WriteDouble(Globals.WorldGen.GetSpawnPoint().Z);
+            buffer.WriteVarInt(0x2F);
+            buffer.WriteDouble(1.0);
+            buffer.WriteDouble(1.0);
+            buffer.WriteDouble(1.0);
             buffer.WriteFloat(0f);
             buffer.WriteFloat(0f);
             buffer.WriteByte(111);
+            buffer.WriteVarInt(1);
             buffer.FlushData();
         }
     }
