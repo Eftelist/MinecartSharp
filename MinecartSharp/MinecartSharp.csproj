@@ -54,6 +54,7 @@
     <Compile Include="Networking\Helpers\MSGBuffer.cs" />
     <Compile Include="Networking\Objects\ChatMessage.cs" />
     <Compile Include="Networking\Objects\Serverping.cs" />
+    <Compile Include="Networking\Packets\ChatMessagePacket.cs" />
     <Compile Include="Networking\Packets\ChunkData.cs" />
     <Compile Include="Networking\Packets\ClientSettings.cs" />
     <Compile Include="Networking\Packets\Disconnect.cs" />
