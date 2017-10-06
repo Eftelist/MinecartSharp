@@ -69,7 +69,7 @@ namespace MinecartSharp
 
         public static void StartTimeOfDayTimer()
         {
-            TimerThread.Start();
+            //TimerThread.Start();
         }
 
         public static void StopTimeOfDayTimer()
