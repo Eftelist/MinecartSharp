@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using System.Collections.Generic;
 using MinecartSharp.Objects;
 using MinecartSharp.Networking.Packets;
@@ -6,11 +7,8 @@ using MinecartSharp.Objects.Chunks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
-using System.Timers;
-using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Utils;
-
 namespace MinecartSharp
 {
     internal class Globals
@@ -26,14 +24,14 @@ namespace MinecartSharp
         public static byte Difficulty = 0;
         public static TcpListener ServerListener;
         public static List<Player> Players = new List<Player>();
-        public static long TimeOfDay = 1200;
-        public static long WorldAge = 0;
+        public static long TimeOfDay = 6000;
+        public static long WorldAge;
         public static Logger Logger = new Logger();
 
 
         public static void setup()
         {
-                   ServerListener = new TcpListener(IPAddress.Any, 25565);
+            ServerListener = new TcpListener(IPAddress.Any, 25565);
         }
 
         public static void LoadDebugChunks()
@@ -65,50 +63,43 @@ namespace MinecartSharp
         }
 
         #region TickTimer
-        private static Thread TimerThread = new Thread(() => StartTimeTimer());
 
-        public static void StartTimeOfDayTimer()
+        private static Thread _worldTimeThread;
+        private static System.Timers.Timer _worldTimer;
+
+        public static void StartWorldTimer()
         {
-            //TimerThread.Start();
+            _worldTimeThread = new Thread((StartTimeTimer));
+
+            _worldTimeThread.Start();
+            StartTimeTimer();
         }
 
-        public static void StopTimeOfDayTimer()
+        public static void StopWorldTimer()
         {
-            TimerThread.Abort();
-            TimerThread = new Thread(() => StartTimeTimer());
-        }
+            Logger.Log(LogType.Info, "Stopping time of day timer");
 
-        static System.Timers.Timer kTimer = new System.Timers.Timer();
+            _worldTimer.Stop();
+            _worldTimeThread.Abort();
+        }
 
         private static void StartTimeTimer()
         {
-            kTimer.Elapsed += new ElapsedEventHandler(RunTick);
-            kTimer.Interval = 1;
-            kTimer.Start();
-        }
+            _worldTimer = new System.Timers.Timer(50);
 
-        private static void StopTimeTimer()
-        {
-            kTimer.Stop();
-        }
-
-        private static void RunTick(object source, ElapsedEventArgs e)
-        {
-            if (TimeOfDay < 24000)
+            _worldTimer.Elapsed += (sender, args) =>
             {
-                TimeOfDay += 20;
-            }
-            else
-            {
-                TimeOfDay = 0;
+                TimeOfDay++;
                 WorldAge++;
-            }
 
-            foreach (Player i in Globals.Players)
-            {
-                new TimeUpdate().Write(i.Wrapper, i.buffer, new object[0]);
-            }
+                foreach (Player i in Globals.Players)
+                {
+                    new TimeUpdate().Write(i.Wrapper, i.buffer, new object[0]);
+                }
+            };
+            _worldTimer.Start();
         }
+
         #endregion
 
     }

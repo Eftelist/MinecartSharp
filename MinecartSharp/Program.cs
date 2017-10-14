@@ -21,13 +21,6 @@ namespace MinecartSharp
             Globals.setupPackets();
             Globals.LoadDebugChunks();
 
-            // time of day and other things
-
-            Globals.StartTimeOfDayTimer();
-
-
-            // other things?
-
             Logger.Log(LogType.Info, "Loading server configuration");
             if (!File.Exists("config.json"))
             {
@@ -40,6 +33,12 @@ namespace MinecartSharp
             Globals.Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
             Globals.MaxPlayers = Globals.Config.MaxPlayer;
 
+            // daylightcycle seems broken (client gets kicked with packet error)
+            if (Globals.Config.GetGamerule("DoDaylightCycle"))
+            {
+                Globals.StartWorldTimer();
+            }
+
             if (File.Exists("server-icon.png"))
             {
                 var servericon = File.ReadAllBytes("server-icon.png");
@@ -48,8 +47,8 @@ namespace MinecartSharp
 
             //TODO: add world loading shit
 
-            var ClientListener = new Thread(() => new BasicListener().ListenForClientsAsync());
-            ClientListener.Start();
+            var clientListener = new Thread(() => new BasicListener().ListenForClientsAsync());
+            clientListener.Start();
 
         }
     }
