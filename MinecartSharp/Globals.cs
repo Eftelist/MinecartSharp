@@ -20,7 +20,7 @@ namespace MinecartSharp
         public static Config Config;
         public static String Favicon;
         internal static List<IPacket> Packets = new List<IPacket>();
-        public static int LastUniqueID = 0;
+        public static int LastUniqueId = 0;
         public static byte Difficulty = 0;
         public static TcpListener ServerListener;
         public static List<Player> Players = new List<Player>();
@@ -29,7 +29,7 @@ namespace MinecartSharp
         public static Logger Logger = new Logger();
 
 
-        public static void setup()
+        public static void Setup()
         {
             ServerListener = new TcpListener(IPAddress.Any, 25565);
         }
@@ -44,7 +44,7 @@ namespace MinecartSharp
         #region WorldGeneration
         public static FlatLandGenerator WorldGen = new FlatLandGenerator();
         public static List<ChunkColumn> ChunkColums = new List<ChunkColumn>();
-        public static string LVLType = "flat";
+        public static string LvLType = "flat";
 
         #endregion
 

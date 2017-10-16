@@ -1,34 +1,20 @@
 ﻿using System;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
 
 namespace MinecartSharp.Networking.Packets
 {
     public class JoinGame : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x23;
-            }
-        }
+        public int PacketID { get; } = 0x23;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
-        {
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments) { }
 
-        }
-
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             buffer.WriteVarInt(PacketID);
             buffer.WriteInt(state.Player.UniqueServerID);
@@ -36,9 +22,8 @@ namespace MinecartSharp.Networking.Packets
             buffer.WriteInt(state.Player.Dimension);
             buffer.WriteByte((byte)Globals.Difficulty);
             buffer.WriteByte((byte)Globals.MaxPlayers);
-            buffer.WriteString(Globals.LVLType);
+            buffer.WriteString(Globals.LvLType);
             buffer.WriteBool(false);
-            Globals.Logger.Log(Utils.LogType.Error, Globals.LVLType);
             buffer.FlushData();
         }
     }

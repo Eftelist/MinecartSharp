@@ -87,7 +87,7 @@ namespace MinecartSharp.Networking.Helpers
         }
 
         /// <summary>
-        /// Flush all data to the TCPClient NetworkStream.
+        /// Flush all data to the TcpClient NetworkStream.
         /// </summary>
         public void FlushData()
         {

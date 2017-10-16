@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Timers;
 using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Packets;
 using MinecartSharp.Objects;
 
@@ -9,20 +9,21 @@ namespace MinecartSharp.Networking.Wrappers
 {
     public class ClientWrapper
     {
-        public TcpClient TCPClient;
+        public TcpClient TcpClient;
         public Player Player;
-        public bool PlayMode = false;
+        public State State = State.Unkown;
+        public int ProtocolVersion;
 
         public ClientWrapper(TcpClient client)
         {
-            TCPClient = client;
+            TcpClient = client;
         }
 
         public void SendData(byte[] Data, int Length)
         {
             try
             {
-                NetworkStream a = TCPClient.GetStream();
+                NetworkStream a = TcpClient.GetStream();
                 a.Write(Data, 0, Length);
                 a.Flush();
             }
@@ -36,7 +37,7 @@ namespace MinecartSharp.Networking.Wrappers
         {
             try
             {
-                NetworkStream a = TCPClient.GetStream();
+                NetworkStream a = TcpClient.GetStream();
                 a.Write(Data, Offset, Length);
                 a.Flush();
             }
@@ -50,7 +51,7 @@ namespace MinecartSharp.Networking.Wrappers
         {
             try
             {
-                NetworkStream a = TCPClient.GetStream();
+                NetworkStream a = TcpClient.GetStream();
                 a.Write(Data, 0, Data.Length);
                 a.Flush();
             }

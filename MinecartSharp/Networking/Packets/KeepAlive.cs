@@ -9,29 +9,17 @@ namespace MinecartSharp.Networking.Packets
 {
     public class KeepAlive : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x0b;
-            }
-        }
+        public int PacketID { get; } = 0x0b;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             //TODO: add system to kick client if no keep alive is send for 20 seconds
             Console.WriteLine("client responds at keep alive");
         }
 
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             Random random = new Random();
             long result = random.Next();

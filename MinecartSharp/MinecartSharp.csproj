@@ -55,19 +55,20 @@
     <Compile Include="Networking\Helpers\MSGBuffer.cs" />
     <Compile Include="Networking\Objects\ChatMessage.cs" />
     <Compile Include="Networking\Objects\Serverping.cs" />
+    <Compile Include="Networking\Objects\State.cs" />
     <Compile Include="Networking\Packets\ChatMessagePacket.cs" />
     <Compile Include="Networking\Packets\ChunkData.cs" />
     <Compile Include="Networking\Packets\ClientSettings.cs" />
     <Compile Include="Networking\Packets\Disconnect.cs" />
     <Compile Include="Networking\Packets\JoinGame.cs" />
+    <Compile Include="Networking\Packets\Login.cs" />
     <Compile Include="Networking\Packets\OnGround.cs" />
     <Compile Include="Networking\Packets\Ping.cs" />
-    <Compile Include="Networking\Packets\PlayerListItem.cs" />
     <Compile Include="Networking\Packets\PlayerLook.cs" />
     <Compile Include="Networking\Packets\PlayerPosition.cs" />
     <Compile Include="Networking\Packets\PlayerPositionAndLook.cs" />
-    <Compile Include="Networking\Packets\SetCompression.cs" />
     <Compile Include="Networking\Packets\SpawnPosition.cs" />
+    <Compile Include="Networking\Packets\StatusRequestPacket.cs" />
     <Compile Include="Networking\Packets\TeleportConfirm.cs" />
     <Compile Include="Networking\Packets\TimeUpdate.cs" />
     <Compile Include="Networking\Helpers\UUIDMojang.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Utils\Extra\NbtFormatException.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\LogType.cs" />
+    <Compile Include="Utils\Mojang\MojangApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

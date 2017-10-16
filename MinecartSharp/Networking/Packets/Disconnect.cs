@@ -13,30 +13,15 @@ namespace MinecartSharp.Networking.Packets
 {
     class Disconnect : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x40;
-            }
-        }
+        public int PacketID { get; } = 0x40;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
-        {
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments) { }
 
-        }
-
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
-            if (state.PlayMode)
+            if (state.State == State.Play)
             {
                 buffer.WriteVarInt(PacketID);
             }
@@ -44,10 +29,8 @@ namespace MinecartSharp.Networking.Packets
             {
                 buffer.WriteVarInt(0x00);
             }
-            buffer.WriteString(JsonConvert.SerializeObject((ChatMessage)Arguments[0], new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            }));
+
+            buffer.WriteString(JsonConvert.SerializeObject((ChatMessage)arguments[0], new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }));
             buffer.FlushData();
         }
     }

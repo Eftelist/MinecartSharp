@@ -1,5 +1,6 @@
 ﻿using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
 using MinecartSharp.Objects;
 
@@ -7,23 +8,11 @@ namespace MinecartSharp.Networking.Packets
 {
     public class PlayerPositionAndLook : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x0E;
-            }
-        }
+        public int PacketID { get; } = 0x0E;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             double X = buffer.ReadDouble();
             double FeetY = buffer.ReadDouble();
@@ -38,7 +27,7 @@ namespace MinecartSharp.Networking.Packets
             state.Player.Coordinates = new Vector3(X, FeetY, Z);
         }
 
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             buffer.WriteVarInt(0x2F);
             buffer.WriteDouble(1.0);

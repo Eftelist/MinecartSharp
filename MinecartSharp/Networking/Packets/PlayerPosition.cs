@@ -1,5 +1,6 @@
 ﻿using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
 using MinecartSharp.Objects;
 
@@ -7,23 +8,11 @@ namespace MinecartSharp.Networking.Packets
 {
     public class PlayerPosition : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x0D;
-            }
-        }
+        public int PacketID { get; } = 0x0D;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             Player targetplayer = state.Player;
             double X = buffer.ReadDouble();
@@ -34,7 +23,7 @@ namespace MinecartSharp.Networking.Packets
             state.Player.OnGround = OnGround;
         }
 
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
 
         }

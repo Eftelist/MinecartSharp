@@ -56,21 +56,6 @@ namespace MinecartSharp.Objects
             SendChunksForKnownPosition(false);
         }
 
-        public void SendMessage(string message)
-        {
-            var chatmessage = new ChatMessage()
-            {
-                Text = message
-            };
-
-            string json = JsonConvert.SerializeObject(chatmessage, new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            new ChatMessagePacket().Write(Wrapper, buffer, new object[]{ json, 0 });
-        }
-
         public void SendChunksForKnownPosition(bool force = false)
          {
              int centerX = (int)Coordinates.X / 16;

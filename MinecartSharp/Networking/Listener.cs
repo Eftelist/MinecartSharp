@@ -29,8 +29,7 @@ namespace MinecartSharp.Networking
         }
         private void HandleClientCommNew(TcpClient tcpClient, NetworkStream clientStream)
         {
-
-           
+ 
             ClientWrapper Client = new ClientWrapper(tcpClient);
 
             while (tcpClient.Connected)
@@ -45,9 +44,12 @@ namespace MinecartSharp.Networking
                         Buf.Size = length;
                         int packid = Buf.ReadVarInt();
                         bool found = false;
+
+                        Console.WriteLine(packid.ToString("X2"));
+
                         foreach (IPacket i in Globals.Packets)
                         {
-                            if (i.PacketID == packid && i.IsPlayePacket == Client.PlayMode)
+                            if (i.PacketID == packid && i.State == Client.State)
                             {
                                 i.Read(Client, Buf, new object[0]);
                                 found = true;
@@ -58,6 +60,9 @@ namespace MinecartSharp.Networking
                         {
                             Globals.Logger.Log(LogType.Error, "Unknown packet received! \"0x" + packid.ToString("X2") + "\"");
                         }
+
+                        Buf.Dispose();
+                                
                     } else
                     {
                         break;
@@ -76,7 +81,7 @@ namespace MinecartSharp.Networking
                 new Logger().Log(LogType.Info, $"{Client.Player.Username} left the game.");
                 Globals.Players.Remove(Client.Player);
             }
-            Client.TCPClient.Close();
+            Client.TcpClient.Close();
         }
     }
 

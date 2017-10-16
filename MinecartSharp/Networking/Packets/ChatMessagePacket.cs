@@ -19,9 +19,9 @@ namespace MinecartSharp.Networking.Packets
     {
         public int PacketID { get; } = 0x02;
 
-        public bool IsPlayePacket { get; } = true;
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             var msg = buffer.ReadString();
 
@@ -36,11 +36,11 @@ namespace MinecartSharp.Networking.Packets
             }
         }
 
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             buffer.WriteVarInt(0x0F);
-            buffer.WriteString((string)Arguments[0]);
-            buffer.WriteByte((byte)Arguments[1]);
+            buffer.WriteString((string)arguments[0]);
+            buffer.WriteByte((byte)arguments[1]);
             buffer.FlushData();
         }
 

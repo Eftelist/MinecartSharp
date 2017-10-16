@@ -5,29 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
 
 namespace MinecartSharp.Networking.Packets
 {
     public class PlayerLook : IPacket
     {
-        public int PacketID
-        {
-            get
-            {
-                return 0x0F;
-            }
-        }
+        public int PacketID { get; } = 0x0F;
 
-        public bool IsPlayePacket
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public State State { get; } = State.Play;
 
-        public void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
             float Yaw = buffer.ReadFloat();
             float Pitch = buffer.ReadFloat();
@@ -36,7 +25,7 @@ namespace MinecartSharp.Networking.Packets
             state.Player.Pitch = Pitch;
         }
 
-        public void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments)
+        public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
 
         }

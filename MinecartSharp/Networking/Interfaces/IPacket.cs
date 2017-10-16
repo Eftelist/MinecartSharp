@@ -1,4 +1,5 @@
 ﻿using MinecartSharp.Networking.Helpers;
+using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
 
 namespace MinecartSharp.Networking.Interfaces
@@ -10,11 +11,11 @@ namespace MinecartSharp.Networking.Interfaces
             get;
         }
 
-        void Read(ClientWrapper state, MSGBuffer buffer, object[] Arguments);
-        void Write(ClientWrapper state, MSGBuffer buffer, object[] Arguments);
+        void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments);
+        void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments);
 
 
-        bool IsPlayePacket
+        State State
         {
             get;
         }
