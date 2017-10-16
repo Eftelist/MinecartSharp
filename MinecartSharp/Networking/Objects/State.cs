@@ -8,7 +8,7 @@ namespace MinecartSharp.Networking.Objects
 {
     public enum State
     {
-        Unkown,
+        Unknown,
         Status,
         Login,
         Play,
