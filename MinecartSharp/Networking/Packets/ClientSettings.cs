@@ -7,7 +7,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class ClientSettings : IPacket
     {
-        public int PacketID { get; } = 0x04;
+        public int PacketId { get; } = 0x04;
 
         public State State { get; } = State.Play;
         

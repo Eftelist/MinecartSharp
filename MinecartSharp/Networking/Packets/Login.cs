@@ -11,7 +11,7 @@ namespace MinecartSharp.Networking.Packets
 {
     class Login : IPacket
     {
-        public int PacketID { get; } = 0x00;
+        public int PacketId { get; } = 0x00;
 
         public State State { get; } = State.Login;
 

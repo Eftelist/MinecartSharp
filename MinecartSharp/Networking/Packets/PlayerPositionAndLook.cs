@@ -8,7 +8,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class PlayerPositionAndLook : IPacket
     {
-        public int PacketID { get; } = 0x0E;
+        public int PacketId { get; } = 0x0E;
 
         public State State { get; } = State.Play;
 

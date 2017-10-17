@@ -7,7 +7,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class Ping : IPacket
     {
-        public int PacketID { get; } = 0x01;
+        public int PacketId { get; } = 0x01;
 
         public State State { get; } = State.Status;
 

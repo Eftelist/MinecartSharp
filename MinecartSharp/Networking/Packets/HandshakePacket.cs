@@ -12,7 +12,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class Handshake : IPacket
     {
-        public int PacketID { get; } = 0x00;
+        public int PacketId { get; } = 0x00;
 
         public State State { get; } = State.Unknown;
 

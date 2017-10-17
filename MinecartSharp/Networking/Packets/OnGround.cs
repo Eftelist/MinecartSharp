@@ -7,7 +7,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class OnGround : IPacket
     {
-        public int PacketID { get; } = 0x0C;
+        public int PacketId { get; } = 0x0C;
 
         public State State { get; } = State.Play;
 

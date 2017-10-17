@@ -48,7 +48,7 @@ namespace MinecartSharp.Networking
 
                         foreach (IPacket i in Globals.Packets)
                         {
-                            if (i.PacketID == packid && i.State == client.State)
+                            if (i.PacketId == packid && i.State == client.State)
                             {
                                 i.Read(client, buf, new object[0]);
                                 found = true;

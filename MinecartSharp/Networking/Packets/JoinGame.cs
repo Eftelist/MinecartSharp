@@ -8,7 +8,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class JoinGame : IPacket
     {
-        public int PacketID { get; } = 0x23;
+        public int PacketId { get; } = 0x23;
 
         public State State { get; } = State.Play;
 
@@ -16,7 +16,7 @@ namespace MinecartSharp.Networking.Packets
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
-            buffer.WriteVarInt(PacketID);
+            buffer.WriteVarInt(PacketId);
             buffer.WriteInt(state.Player.UniqueServerID);
             buffer.WriteByte((byte)state.Player.Gamemode);
             buffer.WriteInt(state.Player.Dimension);

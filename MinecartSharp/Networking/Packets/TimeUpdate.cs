@@ -7,7 +7,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class TimeUpdate : IPacket
     {
-        public int PacketID { get; } = 0x47;
+        public int PacketId { get; } = 0x47;
 
         public State State { get; } = State.Play;
 
@@ -15,7 +15,7 @@ namespace MinecartSharp.Networking.Packets
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
-            buffer.WriteVarInt(PacketID);
+            buffer.WriteVarInt(PacketId);
             buffer.WriteLong(Globals.WorldAge);
             buffer.WriteLong(Globals.TimeOfDay);
             buffer.FlushData();

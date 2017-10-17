@@ -8,7 +8,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class SpawnPosition : IPacket
     {
-        public int PacketID { get; } = 0x46;
+        public int PacketId { get; } = 0x46;
 
         public State State { get; } = State.Play;
 
@@ -21,7 +21,7 @@ namespace MinecartSharp.Networking.Packets
         {
             Vector3 D = new Vector3(1, 1, 1);
             long Data = (((long)D.X & 0x3FFFFFF) << 38) | (((long)D.Y & 0xFFF) << 26) | ((long)D.Z & 0x3FFFFFF);
-            buffer.WriteVarInt(PacketID);
+            buffer.WriteVarInt(PacketId);
             buffer.WriteLong(Data);
             buffer.FlushData();
         }

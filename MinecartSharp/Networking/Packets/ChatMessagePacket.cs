@@ -17,7 +17,7 @@ namespace MinecartSharp.Networking.Packets
 {
     class ChatMessagePacket : IPacket
     {
-        public int PacketID { get; } = 0x02;
+        public int PacketId { get; } = 0x02;
 
         public State State { get; } = State.Play;
 

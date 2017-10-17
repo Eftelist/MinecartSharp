@@ -6,7 +6,7 @@ namespace MinecartSharp.Networking.Interfaces
 {
     public interface IPacket
     {
-        int PacketID
+        int PacketId
         {
             get;
         }

@@ -12,7 +12,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class PlayerLook : IPacket
     {
-        public int PacketID { get; } = 0x0F;
+        public int PacketId { get; } = 0x0F;
 
         public State State { get; } = State.Play;
 

@@ -9,7 +9,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class KeepAlive : IPacket
     {
-        public int PacketID { get; } = 0x0b;
+        public int PacketId { get; } = 0x0b;
 
         public State State { get; } = State.Play;
 

@@ -7,7 +7,7 @@ namespace MinecartSharp.Networking.Packets
 {
     public class LoginSuccess : IPacket
     {
-        public int PacketID { get; } = 0x02;
+        public int PacketId { get; } = 0x02;
 
         public State State { get; } = State.Play;
 
@@ -18,7 +18,7 @@ namespace MinecartSharp.Networking.Packets
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
            
-            buffer.WriteVarInt(PacketID);
+            buffer.WriteVarInt(PacketId);
             buffer.WriteString(arguments[0].ToString());
             buffer.WriteString(arguments[1].ToString());
             buffer.FlushData();

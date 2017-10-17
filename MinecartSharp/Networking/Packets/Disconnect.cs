@@ -8,7 +8,7 @@ namespace MinecartSharp.Networking.Packets
 {
     class Disconnect : IPacket
     {
-        public int PacketID { get; } = 0x1A;
+        public int PacketId { get; } = 0x1A;
 
         public State State { get; } = State.Play;
 
@@ -18,7 +18,7 @@ namespace MinecartSharp.Networking.Packets
         {
             if (state.State == State.Play)
             {
-                buffer.WriteVarInt(PacketID);
+                buffer.WriteVarInt(PacketId);
             }
             else
             {
