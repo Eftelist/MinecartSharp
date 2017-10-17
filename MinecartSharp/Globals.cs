@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Timers;
 using System.Collections.Generic;
 using MinecartSharp.Objects;
 using MinecartSharp.Networking.Packets;
-using MinecartSharp.Objects.Chunks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -33,20 +31,6 @@ namespace MinecartSharp
         {
             ServerListener = new TcpListener(IPAddress.Any, 25565);
         }
-
-        public static void LoadDebugChunks()
-        {
-            Program.Logger.Log(Utils.LogType.Info, "Generating debug chunks");
-            Globals.WorldGen.GenerateChunkColumn(new Vector2(0, 0));
-            Program.Logger.Log(Utils.LogType.Info, "Done debug chunks");
-        }
-
-        #region WorldGeneration
-        public static FlatLandGenerator WorldGen = new FlatLandGenerator();
-        public static List<ChunkColumn> ChunkColums = new List<ChunkColumn>();
-        public static string LvLType = "flat";
-
-        #endregion
 
 
         internal static void setupPackets()

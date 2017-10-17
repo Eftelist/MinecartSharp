@@ -19,7 +19,6 @@ namespace MinecartSharp
             Console.WriteLine("Starting MinecartSharp v{0}", Assembly.GetExecutingAssembly().GetName().Version);
             Globals.Setup();
             Globals.setupPackets();
-            Globals.LoadDebugChunks();
 
             Logger.Log(LogType.Info, "Loading server configuration");
             if (!File.Exists("config.json"))

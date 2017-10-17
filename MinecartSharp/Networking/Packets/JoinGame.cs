@@ -22,7 +22,7 @@ namespace MinecartSharp.Networking.Packets
             buffer.WriteInt(state.Player.Dimension);
             buffer.WriteByte((byte)Globals.Difficulty);
             buffer.WriteByte((byte)Globals.MaxPlayers);
-            buffer.WriteString(Globals.LvLType);
+            buffer.WriteString("flat");
             buffer.WriteBool(false);
             buffer.FlushData();
         }

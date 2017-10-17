@@ -71,13 +71,8 @@
     <Compile Include="Networking\Packets\StatusRequestPacket.cs" />
     <Compile Include="Networking\Packets\TeleportConfirm.cs" />
     <Compile Include="Networking\Packets\TimeUpdate.cs" />
-    <Compile Include="Objects\Chunks\ChunkColumn.cs" />
-    <Compile Include="Objects\Chunks\FlatLandGenerator.cs" />
-    <Compile Include="Objects\Chunks\IWorldProvider.cs" />
     <Compile Include="Objects\Vector2.cs" />
     <Compile Include="Objects\Vector3.cs" />
-    <Compile Include="ObjectHelpers\INbtSerializable.cs" />
-    <Compile Include="ObjectHelpers\NibbleArray.cs" />
     <Compile Include="Networking\Interfaces\IPacket.cs" />
     <Compile Include="Networking\Listener.cs" />
     <Compile Include="Networking\Packets\HandshakePacket.cs" />
@@ -88,10 +83,6 @@
     <Compile Include="Objects\Gamemode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\Extra\NbtBinaryReader.cs" />
-    <Compile Include="Utils\Extra\CryptoRandom.cs" />
-    <Compile Include="Utils\Extra\NbtBinaryWriter.cs" />
-    <Compile Include="Utils\Extra\NbtFormatException.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\LogType.cs" />
     <Compile Include="Utils\Mojang\MojangApi.cs" />

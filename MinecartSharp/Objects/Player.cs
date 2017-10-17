@@ -1,14 +1,9 @@
-﻿using MinecartSharp.MinecartSharp.Objects;
-using System;
+﻿using System;
 using MinecartSharp.Networking.Wrappers;
 using System.Collections.Generic;
-using MinecartSharp.MinecartSharp.Objects.Chunks;
 using System.ComponentModel;
 using MinecartSharp.Networking.Packets;
 using MinecartSharp.Networking.Helpers;
-using MinecartSharp.Networking.Objects;
-using MinecartSharp.Objects.Chunks;
-using Newtonsoft.Json;
 
 namespace MinecartSharp.Objects
 {
@@ -39,18 +34,16 @@ namespace MinecartSharp.Objects
 
         Vector2 CurrentChunkPosition = new Vector2(0, 0);
         public bool ForceChunkReload { get; set; }
-        private Dictionary<string, ChunkColumn> _chunksUsed;
 
         public Player()
         {
-             _chunksUsed = new Dictionary<string, ChunkColumn>();
+             
         }
 
         public void SendChunksFromPosition()
         {
             if (Coordinates == null)
             {
-                Coordinates = Globals.WorldGen.GetSpawnPoint();
                 ViewDistance = 9;
             }
             SendChunksForKnownPosition(false);
@@ -71,19 +64,6 @@ namespace MinecartSharp.Objects
              {
                 BackgroundWorker worker = sender as BackgroundWorker;
                 int Counted = 0;
-                foreach (var chunk in Globals.WorldGen.GenerateChunks(ViewDistance, Coordinates.X, Coordinates.Z, force? new Dictionary<string, ChunkColumn>() : _chunksUsed))
-                { 
-                    if (worker.CancellationPending)
-                    {
-                        args.Cancel = true;
-                        break;
-                    }
-                    Counted++;
-                    new ChunkData().Write(Wrapper, new MSGBuffer(Wrapper), new object[]{ chunk.GetBytes()});
-
-
-                   //Thread.Yield();
-              }
                 if (Counted >= ViewDistance && !IsSpawned)
                 {
                    new PlayerPositionAndLook().Write(Wrapper, new MSGBuffer(Wrapper), new object[0]);
