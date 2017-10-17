@@ -21,13 +21,11 @@ namespace MinecartSharp.Networking.Packets
 
         public void Write(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {
-            Random random = new Random();
-            long result = random.Next();
-            result = (result << 32);
-            result = result | (long)random.Next();
+            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)); //http://i.imgur.com/S9ReRjS.png
+            var unixtime = (long)timeSpan.TotalSeconds;
 
             buffer.WriteVarInt(0x1F);
-            buffer.WriteLong(result);
+            buffer.WriteLong(unixtime);
             buffer.FlushData();
         }
     }

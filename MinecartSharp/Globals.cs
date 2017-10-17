@@ -60,6 +60,8 @@ namespace MinecartSharp
             Packets.Add(new OnGround());
             Packets.Add(new KeepAlive());
             Packets.Add(new ChatMessagePacket());
+            Packets.Add(new Login());
+            Packets.Add(new StatusRequestPacket());
         }
 
         #region TickTimer

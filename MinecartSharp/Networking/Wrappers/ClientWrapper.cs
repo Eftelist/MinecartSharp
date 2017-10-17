@@ -11,7 +11,7 @@ namespace MinecartSharp.Networking.Wrappers
     {
         public TcpClient TcpClient;
         public Player Player;
-        public State State = State.Unkown;
+        public State State = State.Unknown;
         public int ProtocolVersion;
 
         public ClientWrapper(TcpClient client)

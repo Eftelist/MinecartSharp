@@ -14,7 +14,7 @@ namespace MinecartSharp.Networking.Packets
     {
         public int PacketID { get; } = 0x00;
 
-        public State State { get; } = State.Unkown;
+        public State State { get; } = State.Unknown;
 
         public void Read(ClientWrapper state, MSGBuffer buffer, object[] arguments)
         {

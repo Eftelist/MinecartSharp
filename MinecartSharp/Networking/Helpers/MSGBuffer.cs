@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using MinecartSharp.Networking.Wrappers;
-using MinecartSharp.Utils;
 
 namespace MinecartSharp.Networking.Helpers
 {

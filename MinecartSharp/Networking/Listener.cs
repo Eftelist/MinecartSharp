@@ -30,28 +30,27 @@ namespace MinecartSharp.Networking
         private void HandleClientCommNew(TcpClient tcpClient, NetworkStream clientStream)
         {
  
-            ClientWrapper Client = new ClientWrapper(tcpClient);
+            ClientWrapper client = new ClientWrapper(tcpClient);
 
             while (tcpClient.Connected)
             {
                 try
                 {
-                    MSGBuffer Buf = new MSGBuffer(Client, clientStream);
-                    int ReceivedData = clientStream.Read(Buf.BufferedData, 0, Buf.BufferedData.Length);
-                    if (ReceivedData > 0)
-                    {
-                        int length = Buf.ReadVarInt();
-                        Buf.Size = length;
-                        int packid = Buf.ReadVarInt();
-                        bool found = false;
+                    var buf = new MSGBuffer(client, clientStream);
+                    var receivedData = clientStream.Read(buf.BufferedData, 0, buf.BufferedData.Length);
 
-                        Console.WriteLine(packid.ToString("X2"));
+                    if (receivedData > 0)
+                    {
+                        int length = buf.ReadVarInt();
+                        buf.Size = length;
+                        int packid = buf.ReadVarInt();
+                        bool found = false;
 
                         foreach (IPacket i in Globals.Packets)
                         {
-                            if (i.PacketID == packid && i.State == Client.State)
+                            if (i.PacketID == packid && i.State == client.State)
                             {
-                                i.Read(Client, Buf, new object[0]);
+                                i.Read(client, buf, new object[0]);
                                 found = true;
                                 break;
                             }
@@ -61,7 +60,7 @@ namespace MinecartSharp.Networking
                             Globals.Logger.Log(LogType.Error, "Unknown packet received! \"0x" + packid.ToString("X2") + "\"");
                         }
 
-                        Buf.Dispose();
+                        buf.Dispose();
                                 
                     } else
                     {
@@ -70,18 +69,19 @@ namespace MinecartSharp.Networking
                 } catch(Exception e)
                 {
                     Globals.Logger.Log(LogType.Error, e.Message);
-                    new Disconnect().Write(Client, new MSGBuffer(Client), new object[] { new ChatMessage(){ Text = "Server threw an exception!" } });
+                    new Disconnect().Write(client, new MSGBuffer(client), new object[] { new ChatMessage(){ Text = "Server threw an exception!" } });
                     break;
                 }
             }
-            //Close the connection with the client. :)
-            Client.StopKeepAliveTimer();
-            if (Client.Player != null)
+
+            //Close the connection with the client.
+            client.StopKeepAliveTimer();
+            if (client.Player != null)
             {
-                new Logger().Log(LogType.Info, $"{Client.Player.Username} left the game.");
-                Globals.Players.Remove(Client.Player);
+                new Logger().Log(LogType.Info, $"{client.Player.Username} left the game.");
+                Globals.Players.Remove(client.Player);
             }
-            Client.TcpClient.Close();
+            client.TcpClient.Close();
         }
     }
 

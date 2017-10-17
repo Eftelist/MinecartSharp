@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MinecartSharp.Networking.Helpers;
+﻿using MinecartSharp.Networking.Helpers;
 using MinecartSharp.Networking.Interfaces;
 using MinecartSharp.Networking.Objects;
 using MinecartSharp.Networking.Wrappers;
@@ -13,7 +8,7 @@ namespace MinecartSharp.Networking.Packets
 {
     class Disconnect : IPacket
     {
-        public int PacketID { get; } = 0x40;
+        public int PacketID { get; } = 0x1A;
 
         public State State { get; } = State.Play;
 
