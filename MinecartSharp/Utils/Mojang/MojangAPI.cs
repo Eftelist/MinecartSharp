@@ -27,7 +27,7 @@ namespace MinecartSharp.Utils.Mojang
                 }
                 catch (WebException e)
                 {
-                    Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username '" + username + "'");
+                    Globals.Logger.Log(LogType.Error, "Couldn't receive UUID from '" + username + "'");
                     return "";
                 }
 
