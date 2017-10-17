@@ -31,9 +31,11 @@ namespace MinecartSharp.Networking.Packets
             {
                 case 1:
                     state.State = State.Status;
+                    new StatusRequestPacket().Write(state, buffer, new object[0]);
                     break;
                 case 2:
                     state.State = State.Login;
+                    new Login().Write(state, buffer, new object[0]);
                     break;
             }
         }

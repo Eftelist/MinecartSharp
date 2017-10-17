@@ -45,8 +45,6 @@ namespace MinecartSharp.Networking.Packets
                 Favicon = (Globals.Favicon == null) ? "" : Globals.Favicon
             };
 
-            new Logger().Log(LogType.Error, "biem status");
-
             buffer.WriteString(JsonConvert.SerializeObject(serverlistping));
             buffer.FlushData();
         }

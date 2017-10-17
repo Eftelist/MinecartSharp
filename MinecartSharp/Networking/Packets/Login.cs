@@ -40,7 +40,7 @@ namespace MinecartSharp.Networking.Packets
                 return;
             }
 
-            string username = buffer.ReadString();
+            string username = buffer.ReadUsername();
             Console.WriteLine(username);
 
             if (string.IsNullOrWhiteSpace(username))
@@ -52,7 +52,7 @@ namespace MinecartSharp.Networking.Packets
                 return;
             }
 
-            string UUID = new MojangApi().getUUID(username);
+            string UUID = new MojangApi().GetUUID(username);
 
             if (string.IsNullOrWhiteSpace(UUID))
             {

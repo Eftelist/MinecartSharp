@@ -10,7 +10,7 @@ namespace MinecartSharp.Utils.Mojang
 {
     class MojangApi
     {
-        public string getUUID(string username)
+        public string GetUUID(string username)
         {
             if (string.IsNullOrEmpty(username))
                 return "";
@@ -21,22 +21,20 @@ namespace MinecartSharp.Utils.Mojang
                 string result = "";
                 try
                 {
-                    result = webClient.UploadString("https://api.mojang.com/profiles/minecraft", $"[\"{username}\"]");
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    result = webClient.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + username);
 
                 }
                 catch (WebException e)
                 {
-                    Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username" + " " + username);
-                    Globals.Logger.Log(LogType.Error, e.Message);
+                    Globals.Logger.Log(LogType.Error, "Couldn't retrieve uuid for username '" + username + "'");
                     return "";
                 }
 
                 dynamic json = JsonConvert.DeserializeObject(result);
                 if (json.Count > 0)
                 {
-                    string UUID = json[0].id;
-                    Globals.Logger.Log(LogType.Info, "UUID = " + Guid.Parse(UUID).ToString());
-                    return Guid.Parse(UUID).ToString();
+                    return Guid.Parse(json.id).ToString();
                 }
                 else
                 {
