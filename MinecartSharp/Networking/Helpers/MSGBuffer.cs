@@ -127,7 +127,7 @@ namespace MinecartSharp.Networking.Helpers
             int D = 0;
             foreach (byte i in NoEdit)
             {
-                if (D > 1)
+                if (D >= 0)
                 {
                     t.Add(i);
                 }

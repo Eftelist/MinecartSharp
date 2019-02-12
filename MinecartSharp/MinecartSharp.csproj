@@ -86,11 +86,23 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\LogType.cs" />
     <Compile Include="Utils\Mojang\MojangApi.cs" />
+    <Compile Include="Utils\Mojang\MojangApiResult.cs" />
+    <Compile Include="World\BlockFactory.cs" />
+    <Compile Include="World\Blocks\Block.cs" />
+    <Compile Include="World\Blocks\BlockAir.cs" />
+    <Compile Include="World\Chunks\ChunkColumn.cs" />
+    <Compile Include="World\Level\IWorldProvider.cs" />
+    <Compile Include="World\Level\Level.cs" />
+    <Compile Include="World\NBT\INbtSerializable.cs" />
+    <Compile Include="World\NBT\NbtBinaryWriter.cs" />
+    <Compile Include="World\NBT\NibbleArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NBT" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -31,8 +31,8 @@ namespace MinecartSharp.Utils.Mojang
                     return "";
                 }
 
-                dynamic json = JsonConvert.DeserializeObject(result);
-                if (json.Count > 0)
+                MojangApiResult json = JsonConvert.DeserializeObject<MojangApiResult>(result);
+                if (json.id.Length > 0)
                 {
                     return Guid.Parse(json.id).ToString();
                 }
